@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drawer_header_height"
+    android:background="@mipmap/drawer_patt"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/padding_top"
+    android:paddingLeft="@dimen/padding_left"
+    android:paddingBottom="@dimen/padding_bottom"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:layout_width="@dimen/photo_radius"
+        android:layout_height="@dimen/photo_radius"
+        android:id="@+id/photo"
+        android:src="@mipmap/photo"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_from_button"
+        android:id="@+id/subtitle"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+    
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/iname"
+        android:text="@string/ini"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_ini"
+        android:textColor="@color/color_ini"
+        android:fontFamily="@string/font_ini"/>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imail"
+        android:text="@string/mail"
+        android:textSize="@dimen/text_mail"
+        android:textColor="@color/color_mail"
+        android:fontFamily="@string/font_mail"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
