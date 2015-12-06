@@ -11,5 +11,6 @@
     <dimen name="photo_radius">64dp</dimen>
     <dimen name="text_ini">14sp</dimen>
     <dimen name="text_mail">14sp</dimen>
+    <dimen name="list_text">24sp</dimen>
 
 </resources>
