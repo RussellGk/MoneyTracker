@@ -39,11 +39,10 @@ public class ExpensesAdapter extends ArrayAdapter<Expense> {
         RelativeLayout fone = (RelativeLayout) convertView.findViewById(R.id.relative_item);
         foneColor = rgb(getIntColor(),getIntColor(),getIntColor());
         fone.setBackgroundColor(foneColor);
+
         TextView name =(TextView) convertView.findViewById(R.id.name_text);
         TextView data =(TextView) convertView.findViewById(R.id.date_text);
         TextView sum = (TextView) convertView.findViewById(R.id.sum_text);
-
-        // Add Date
 
         name.setText(expense.getTitle());
         data.setText(expense.getHumanDate(expense.getDate()));

@@ -74,14 +74,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item)
             {
-                if(item.getItemId()== R.id.drawer_expenses) //switch-case
+                switch (item.getItemId())
                 {
-                  fragment = new ExpansesFragment();
+                    case R.id.drawer_expenses:
+                        fragment = new ExpansesFragment();
+                        break;
+                    case R.id.drawer_categories:
+                        fragment = new CategoryFragment();
+                        break;
+                    case R.id.drawer_statistics:
+                        fragment = new StatisticsFragment();
+                        break;
+                    case R.id.drawer_settings:
+                        fragment = new SettingsFragment();
+                        break;
                 }
-                else
-                {
-                  fragment = new OtherFragment();
-                }
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragment).addToBackStack(null).commit();
                 item.setChecked(true);
                 drawerLayout.closeDrawers();

@@ -7,8 +7,6 @@ import java.util.Date;
  * Created by RG on 06.12.2015.
  */
 public class Expense {
-//     public String title;
-//     public String sum;//Add int abd set and get methods
 
      private String title;
      private Date date;
