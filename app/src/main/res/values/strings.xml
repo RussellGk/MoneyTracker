@@ -11,5 +11,6 @@
     <string name="font_ini">roboto-medium</string>
     <string name="font_mail">roboto-regular</string>
     <string name="list_name">Name</string>
+    <string name="list_date">Date</string>
     <string name="list_sum">Sum</string>
 </resources>

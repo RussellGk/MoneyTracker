@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,9 +29,9 @@ public class OtherFragment extends Fragment {
     private List<Expense> getDataList()
     {
         List<Expense> data = new ArrayList<>();
-        data.add(new Expense("Food","4000"));
-        data.add(new Expense("Servers","500"));
-        data.add(new Expense("TV","350"));
+        data.add(new Expense("Food",new Date(),4000));
+        data.add(new Expense("Servers",new Date(),500));
+        data.add(new Expense("TV",new Date(),350));
         return data;
     }
 }
