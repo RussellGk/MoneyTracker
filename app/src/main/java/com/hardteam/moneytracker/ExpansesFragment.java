@@ -2,7 +2,12 @@ package com.hardteam.moneytracker;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +24,26 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mainView = inflater.inflate(R.layout.expenses_fragment,container,false);
-        ListView expensesListView = (ListView) mainView.findViewById(R.id.list_view);
+        final View mainView = inflater.inflate(R.layout.expenses_fragment,container,false);
+        RecyclerView expensesRecycleView = (RecyclerView) mainView.findViewById(R.id.context_recyclerview);
         List<Expense> adapterData = getDataList();
-        ExpensesAdapter expensesAdapter = new ExpensesAdapter(getActivity(),adapterData);
-        expensesListView.setAdapter(expensesAdapter);
-        getActivity().setTitle(getString(R.string.nav_drawer_expenses));
+        ExpensesAdapter expensesAdapter = new ExpensesAdapter(adapterData);
+        expensesRecycleView.setAdapter(expensesAdapter);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        expensesRecycleView.setLayoutManager(gridLayoutManager);
+
+        FloatingActionButton floatingActionButton =(FloatingActionButton)mainView.findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v)
+        {
+            Snackbar.make(mainView,"Nice", Snackbar.LENGTH_SHORT).show();
+        }
+        });
+
+                getActivity().setTitle(getString(R.string.nav_drawer_expenses));
         return mainView;
     }
     private List<Expense> getDataList()
