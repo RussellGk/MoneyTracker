@@ -59,27 +59,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Menu menuItems = navigationView.getMenu();
         Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
 
-        if(findingFragment != null)
-
-            if(findingFragment instanceof ExpansesFragment)
+        if(findingFragment != null && findingFragment instanceof ExpansesFragment)
         {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            navigationView.getMenu().findItem(R.id.drawer_expenses).setCheckable(true);
+            menuItems.findItem(R.id.drawer_expenses).setCheckable(true);
 
         }
-            if(findingFragment instanceof CategoryFragment)
+        if(drawerLayout.isEnabled())//WOW it's working
         {
-            navigationView.getMenu().findItem(R.id.drawer_categories).setCheckable(true);
-        }
-            if(findingFragment instanceof StatisticsFragment)
-        {
-            navigationView.getMenu().findItem(R.id.drawer_statistics).setCheckable(true);
-        }
-            if(findingFragment instanceof SettingsFragment)
-        {
-            navigationView.getMenu().findItem(R.id.drawer_settings).setCheckable(true);
+            drawerLayout.closeDrawer(navigationView);//I can't believe, its' working too :)
         }
     }
 
