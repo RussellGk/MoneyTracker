@@ -10,4 +10,9 @@
     <string name="mail">ruslgee@gmail.com</string>
     <string name="font_ini">roboto-medium</string>
     <string name="font_mail">roboto-regular</string>
+    <string name="list_name">Name</string>
+    <string name="list_date">Date</string>
+    <string name="list_sum">Sum</string>
+    <string name="stat_temp">Здесь будет статистика</string>
+    <string name="set_temp">Здесь будут настройки</string>
 </resources>
