@@ -30,9 +30,13 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         ExpensesAdapter expensesAdapter = new ExpensesAdapter(adapterData);
         expensesRecycleView.setAdapter(expensesAdapter);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
-        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        expensesRecycleView.setLayoutManager(gridLayoutManager);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
+//        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        expensesRecycleView.setLayoutManager(gridLayoutManager);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        expensesRecycleView.setLayoutManager(linearLayoutManager);
 
         FloatingActionButton floatingActionButton =(FloatingActionButton)mainView.findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +47,7 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         }
         });
 
-                getActivity().setTitle(getString(R.string.nav_drawer_expenses));
+        getActivity().setTitle(getString(R.string.nav_drawer_expenses));
         return mainView;
     }
     private List<Expense> getDataList()

@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.design.widget.CoordinatorLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/category_content"
+style = "@style/Container.MainBackground">
+
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/category_recyclerview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    />
+<android.support.design.widget.FloatingActionButton
+    android:id="@+id/fab_category"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|right"
+    android:layout_margin="@dimen/padding_bottom"
+    android:src="@mipmap/ic_menu_white_24dp"
+    app:layout_anchor="@id/category_recyclerview"
+    app:layout_anchorGravity="bottom|right|end"
+    app:layout_behavior=".ScrollFABBehavior"
+    />
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_vertical_margin"
-        android:id="@+id/list_view"></ListView>
+    <!--<ListView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:padding="@dimen/activity_vertical_margin"-->
+        <!--android:id="@+id/list_view"></ListView>-->
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

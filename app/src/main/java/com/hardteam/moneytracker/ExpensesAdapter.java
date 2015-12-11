@@ -19,7 +19,6 @@ import static android.graphics.Color.rgb;
 public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.CardViewHolder> {
 
     List<Expense> expenses;
-//    static int foneColor;
 
     public ExpensesAdapter(List<Expense> expenses) {
         this.expenses = expenses;
