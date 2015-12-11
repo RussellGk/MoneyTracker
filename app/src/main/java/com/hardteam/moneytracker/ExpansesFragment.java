@@ -30,10 +30,6 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         ExpensesAdapter expensesAdapter = new ExpensesAdapter(adapterData);
         expensesRecycleView.setAdapter(expensesAdapter);
 
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
-//        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        expensesRecycleView.setLayoutManager(gridLayoutManager);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecycleView.setLayoutManager(linearLayoutManager);

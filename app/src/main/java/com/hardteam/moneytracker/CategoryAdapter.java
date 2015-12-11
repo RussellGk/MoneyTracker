@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import static android.graphics.Color.rgb;
-
 /**
  * Created by RG on 07.12.2015.
  */
@@ -24,24 +22,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CardVi
     public CategoryAdapter(List<Category> category) {
         this.category = category;
     }
-//
-//
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent)    {
-//
-//        Category category = getItem(position);
-//        if(convertView == null)
-//        {
-//            convertView = LayoutInflater.from(getContext()).inflate(R.layout.category_item, parent,false);
-//        }
-//
-//        RelativeLayout fone = (RelativeLayout) convertView.findViewById(R.id.category_items_list);
-//
-//        TextView name =(TextView) convertView.findViewById(R.id.name_text);
-//
-//        name.setText(category.getCategoryName());
-//        return convertView;
-//    }
 
     @Override
     public CategoryAdapter.CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
