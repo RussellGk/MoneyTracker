@@ -8,40 +8,66 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.ViewById;
+
 /**
  * Created by RG on 12.12.2015.
  */
+
+@EActivity(R.layout.activity_add_expense)
+
 public class AddExpenseActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    @ViewById
+    Toolbar toolbar;//With private doesn't work
+    @OptionsItem(R.id.home)
+    void back()
+    {
+      onBackPressed();
+      finish();
+    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_expense);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar); // from import android.support.v7.widget.Toolbar;
+    @AfterViews
+    void ready() {
         setSupportActionBar(toolbar);
-
-        Intent intent = getIntent();
-        String value = intent.getStringExtra("key");
-        Log.e("Value", value);
-
-        if (getSupportActionBar()!= null)
+        if (getSupportActionBar() != null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle("Добавить Трату");
         }
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == android.R.id.home)// burger button on Toolbar
-        {
-            onBackPressed();
-            finish();// add finish() method for Destroy the current Activity
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    //    private Toolbar toolbar;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_add_expense);
+//
+//        toolbar = (Toolbar) findViewById(R.id.toolbar); // from import android.support.v7.widget.Toolbar;
+//        setSupportActionBar(toolbar);
+//
+//        Intent intent = getIntent();
+//        String value = intent.getStringExtra("key");
+//        Log.e("Value", value);
+//
+//        if (getSupportActionBar()!= null)
+//        {
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        }
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if(id == android.R.id.home)// burger button on Toolbar
+//        {
+//            onBackPressed();
+//            finish();// add finish() method for Destroy the current Activity
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

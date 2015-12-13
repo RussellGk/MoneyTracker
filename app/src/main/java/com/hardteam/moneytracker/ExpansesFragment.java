@@ -41,7 +41,7 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         public void onClick(View v)
         {
 //          Snackbar.make(mainView,"Nice", Snackbar.LENGTH_SHORT).show();
-            Intent intent = new Intent(getActivity(), AddExpenseActivity.class);
+            Intent intent = new Intent(getActivity(), AddExpenseActivity_.class);
             intent.putExtra("key","value");
             getActivity().startActivity(intent);
 
