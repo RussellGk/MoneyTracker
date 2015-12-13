@@ -15,7 +15,7 @@ import java.util.List;
  * Created by RG on 07.12.2015.
  */
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CardViewHolder>//ArrayAdapter<Category> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CardViewHolder>
 {
     List<Category> category;
 

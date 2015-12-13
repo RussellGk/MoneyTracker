@@ -1,5 +1,6 @@
 package com.hardteam.moneytracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -39,7 +40,11 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         @Override
         public void onClick(View v)
         {
-            Snackbar.make(mainView,"Nice", Snackbar.LENGTH_SHORT).show();
+//          Snackbar.make(mainView,"Nice", Snackbar.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), AddExpenseActivity.class);
+            intent.putExtra("key","value");
+            getActivity().startActivity(intent);
+
         }
         });
 
