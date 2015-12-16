@@ -1,18 +1,18 @@
-package com.hardteam.moneytracker;
+package com.hardteam.moneytracker.ui.fragments;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+
+import com.activeandroid.query.Select;
+
+import com.hardteam.moneytracker.Expense;
+import com.hardteam.moneytracker.adapters.ExpensesAdapter;
+import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.database.Expenses;
+import com.hardteam.moneytracker.ui.activities.AddExpenseActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -52,6 +52,16 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecycleView.setLayoutManager(linearLayoutManager);
+
+        Expenses expenses = new Expenses();
+        expenses.price = "123";
+        expenses.name = "cinema";
+        expenses.category = "Fun";
+        expenses.date = "12.12.15";
+        expenses.save();
+
+        Expenses expenses1 = getExpense();
+
         if (floatingActionButton.isPressed()){
             ButtonWasClicked();
         }
@@ -66,5 +76,12 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         data.add(new Expense("PC", new Date(), 5000));
         data.add(new Expense("Internet", new Date(), 500));
         return data;
+    }
+
+    public Expenses getExpense()
+    {
+        return new Select()
+                .from(Expenses.class)
+                .executeSingle();
     }
 }

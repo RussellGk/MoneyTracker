@@ -7,7 +7,7 @@ public class Category {
 
     private String categoryName;
 
-    Category(String categoryName)
+    public Category(String categoryName)
     {
         this.categoryName = categoryName;
     }

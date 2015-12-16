@@ -1,4 +1,4 @@
-package com.hardteam.moneytracker;
+package com.hardteam.moneytracker.ui.activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,6 +19,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+
+import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
+import com.hardteam.moneytracker.ui.fragments.ExpansesFragment_;
+import com.hardteam.moneytracker.ui.fragments.SettingsFragment_;
+import com.hardteam.moneytracker.ui.fragments.StatisticsFragment_;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
