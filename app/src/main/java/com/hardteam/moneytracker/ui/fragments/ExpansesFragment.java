@@ -1,17 +1,19 @@
 package com.hardteam.moneytracker.ui.fragments;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.activeandroid.query.Select;
 
-import com.hardteam.moneytracker.Expense;
-import com.hardteam.moneytracker.adapters.ExpensesAdapter;
 import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.adapters.ExpensesAdapter;
 import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.database.Expenses;
 import com.hardteam.moneytracker.ui.activities.AddExpenseActivity_;
@@ -21,8 +23,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +34,8 @@ import java.util.List;
 public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fragment
 
     private static final String LOG_VIEW = ExpansesFragment.class.getSimpleName();
+
+//    private RecyclerView expensesRecycleViewNew;
 
     @ViewById(R.id.context_recyclerview)
     RecyclerView expensesRecycleView;
@@ -50,28 +52,20 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
     @AfterViews
     void ready()
     {
-        List<Expense> adapterData = getDataList();
-        ExpensesAdapter expensesAdapter = new ExpensesAdapter(adapterData);
-        expensesRecycleView.setAdapter(expensesAdapter);
+        //List<Expense> adapterData = getDataList();
+        //ExpensesAdapter expensesAdapter = new ExpensesAdapter(adapterData);
+        //expensesRecycleView.setAdapter(expensesAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecycleView.setLayoutManager(linearLayoutManager);
 
         Categories categoryFun = new Categories("Fun");
         categoryFun.save();
-        Expenses expenses = new Expenses("123","Cinema","15.12.15",categoryFun);
+        Expenses expenses = new Expenses("321","Cinema","15.12.15",categoryFun);
         expenses.save();
 
-        Expenses expenses1 = getExpense();
-        Log.e(LOG_VIEW, expenses1.category.toString());
-
-//        expenses.price = "123";
-//        expenses.name = "cinema";
-//        expenses.category = "Fun";
-//        expenses.date = "12.12.15";
-//        expenses.save();
-//
 //        Expenses expenses1 = getExpense();
+//        Log.e(LOG_VIEW, expenses1.category.toString());
 
         if (floatingActionButton.isPressed()){
             ButtonWasClicked();
@@ -79,34 +73,46 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         getActivity().setTitle(getString(R.string.nav_drawer_expenses));
     }
 
-    private List<Expense> getDataList() {
-        List<Expense> data = new ArrayList<>();
-        data.add(new Expense("Telephone", new Date(), 500));
-        data.add(new Expense("Clothes", new Date(), 3000));
-        data.add(new Expense("Flat", new Date(), 26000));
-        data.add(new Expense("PC", new Date(), 5000));
-        data.add(new Expense("Internet", new Date(), 500));
-        return data;
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
     }
 
-//    public Expenses getExpense()
-//    {
-//        return new Select()
-//                .from(Expenses.class)
-//                .executeSingle();
-//    }
+    private void loadData()
+    {
+        getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Expenses>>(){
+            @Override
+            public Loader<List<Expenses>> onCreateLoader(int id, Bundle args) {//import android.support.v4.content.AsyncTaskLoader;
+                final AsyncTaskLoader<List<Expenses>> loader = new AsyncTaskLoader<List<Expenses>>(getActivity()) {
+                    @Override
+                    public List<Expenses> loadInBackground() {
+                        return getDataList();
+                    }
+                };
 
-//    private List<Expenses> getExpense()
-//    {
-//        return new Select()
-//                .from(Expenses.class)
-//                .execute();
-//    }
+                loader.forceLoad();
+                return loader;
+            }
 
-    private Expenses getExpense()
+            @Override
+            public void onLoadFinished(Loader<List<Expenses>> loader, List<Expenses> data) {
+
+                expensesRecycleView.setAdapter(new ExpensesAdapter(data));
+            }
+
+            @Override
+            public void onLoaderReset(Loader<List<Expenses>> loader) {
+
+            }
+        });
+    }
+
+    private List<Expenses> getDataList()
     {
         return new Select()
                 .from(Expenses.class)
-                .executeSingle();
+                .execute();
     }
+
 }

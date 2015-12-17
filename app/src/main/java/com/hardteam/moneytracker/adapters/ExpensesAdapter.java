@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hardteam.moneytracker.Expense;
 import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.database.Expenses;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.CardViewHolder> {
 
-    List<Expense> expenses;
+    List<Expenses> expenses;
 
-    public ExpensesAdapter(List<Expense> expenses) {
+    public ExpensesAdapter(List<Expenses> expenses) {
         this.expenses = expenses;
     }
 
@@ -31,10 +31,11 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.CardVi
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
-        Expense expense = expenses.get(position);
-        holder.name_text.setText(expense.getTitle());
-        holder.data_text.setText(expense.getHumanDate(expense.getDate()));
-        holder.sum_text.setText(expense.getMoney(expense.getSum()));
+        Expenses expense = expenses.get(position);
+        holder.name_text.setText(expense.name);
+        holder.data_text.setText(expense.date);
+    // holder.data_text.setText(expense.getHumanDate(expense.getDate()));
+        holder.sum_text.setText(expense.price);
     }
 
     @Override
