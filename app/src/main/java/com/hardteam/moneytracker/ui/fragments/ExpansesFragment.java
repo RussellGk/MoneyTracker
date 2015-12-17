@@ -5,12 +5,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.activeandroid.query.Select;
 
 import com.hardteam.moneytracker.Expense;
 import com.hardteam.moneytracker.adapters.ExpensesAdapter;
 import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.database.Expenses;
 import com.hardteam.moneytracker.ui.activities.AddExpenseActivity_;
 
@@ -30,6 +32,8 @@ import java.util.List;
 @EFragment(R.layout.expenses_fragment)
 
 public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fragment
+
+    private static final String LOG_VIEW = ExpansesFragment.class.getSimpleName();
 
     @ViewById(R.id.context_recyclerview)
     RecyclerView expensesRecycleView;
@@ -53,14 +57,21 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecycleView.setLayoutManager(linearLayoutManager);
 
-        Expenses expenses = new Expenses();
-        expenses.price = "123";
-        expenses.name = "cinema";
-        expenses.category = "Fun";
-        expenses.date = "12.12.15";
+        Categories categoryFun = new Categories("Fun");
+        categoryFun.save();
+        Expenses expenses = new Expenses("123","Cinema","15.12.15",categoryFun);
         expenses.save();
 
         Expenses expenses1 = getExpense();
+        Log.e(LOG_VIEW, expenses1.category.toString());
+
+//        expenses.price = "123";
+//        expenses.name = "cinema";
+//        expenses.category = "Fun";
+//        expenses.date = "12.12.15";
+//        expenses.save();
+//
+//        Expenses expenses1 = getExpense();
 
         if (floatingActionButton.isPressed()){
             ButtonWasClicked();
@@ -78,7 +89,21 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         return data;
     }
 
-    public Expenses getExpense()
+//    public Expenses getExpense()
+//    {
+//        return new Select()
+//                .from(Expenses.class)
+//                .executeSingle();
+//    }
+
+//    private List<Expenses> getExpense()
+//    {
+//        return new Select()
+//                .from(Expenses.class)
+//                .execute();
+//    }
+
+    private Expenses getExpense()
     {
         return new Select()
                 .from(Expenses.class)

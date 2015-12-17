@@ -21,14 +21,14 @@ public class Expenses extends Model{
     public String date;
 
     @Column(name ="category")
-    public String category;
+    public Categories category;
 
     public Expenses()
     {
         super();
     }
 
-    public Expenses(String price, String name, String date, String category)
+    public Expenses(String price, String name, String date, Categories category)
     {
         super();
         this.price = price;
