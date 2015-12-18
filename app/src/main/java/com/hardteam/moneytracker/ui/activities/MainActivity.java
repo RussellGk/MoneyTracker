@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
 import com.hardteam.moneytracker.ui.fragments.ExpansesFragment_;
 import com.hardteam.moneytracker.ui.fragments.SettingsFragment_;
@@ -60,11 +61,25 @@ public class MainActivity extends AppCompatActivity {
         setupToolbar();
         setupDrawer();
 
+        createCategories();
+
         if(savedInstanceState == null)
         {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment_()).commit();
         }
 
+    }
+
+    private void createCategories()
+    {
+        Categories categoryFun = new Categories("Fun");
+        categoryFun.save();
+        Categories categoryPhone = new Categories("Phone");
+        categoryPhone.save();
+        Categories categoryFood = new Categories("Food");
+        categoryFood.save();
+        Categories categoryBooks = new Categories("Books");
+        categoryBooks.save();
     }
 
     private void setupToolbar()

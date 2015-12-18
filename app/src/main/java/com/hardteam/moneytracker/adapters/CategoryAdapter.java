@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.hardteam.moneytracker.Category;
 import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.database.Categories;
 
 import java.util.List;
 
@@ -17,10 +18,10 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CardViewHolder>
 {
-    List<Category> category;
+    List<Categories> categories;
 
-    public CategoryAdapter(List<Category> category) {
-        this.category = category;
+    public CategoryAdapter(List<Categories> categories) {
+        this.categories = categories;
     }
 
     @Override
@@ -31,13 +32,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CardVi
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
-        Category categories = category.get(position);
-        holder.categories_name.setText(categories.getCategoryName());
+        Categories category = categories.get(position);
+        holder.categories_name.setText(category.name);
     }
 
     @Override
     public int getItemCount() {
-        return category.size();
+        return categories.size();
     }
 
     public class CardViewHolder extends RecyclerView.ViewHolder{
