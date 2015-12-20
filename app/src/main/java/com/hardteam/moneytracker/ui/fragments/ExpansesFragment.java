@@ -59,10 +59,12 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecycleView.setLayoutManager(linearLayoutManager);
 
-//        Categories categoryFun = new Categories("Fun");
-//        categoryFun.save();
-//        Expenses expenses = new Expenses("321","Cinema","15.12.15",categoryFun);
-//        expenses.save();
+        //remove this code
+
+        Categories categoryFun = new Categories("Fun");
+        categoryFun.save();
+        Expenses expenses = new Expenses("321","Cinema","15.12.15",categoryFun);
+        expenses.save();
 
 //        Expenses expenses1 = getExpense();
 //        Log.e(LOG_VIEW, expenses1.category.toString());
