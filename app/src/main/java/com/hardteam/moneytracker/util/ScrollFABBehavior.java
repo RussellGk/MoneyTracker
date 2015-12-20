@@ -1,4 +1,4 @@
-package com.hardteam.moneytracker;
+package com.hardteam.moneytracker.util;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
