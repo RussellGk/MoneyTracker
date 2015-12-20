@@ -66,30 +66,18 @@ public class AddExpenseActivity extends AppCompatActivity {
         SpinnerCategoryAdapter spinnerAdapter = new SpinnerCategoryAdapter(getDataList());
         listSpinner.setAdapter(spinnerAdapter);
 
-//        if (sumField.getText().toString().equals(""))
-//        {
-//            Snackbar.make(getCurrentFocus(), "Fill it", Snackbar.LENGTH_SHORT).show();
-//        }
-//        if (noteField.getText().toString().equals(""))
-//        {
-//            Snackbar.make(getCurrentFocus(), "Fill it", Snackbar.LENGTH_SHORT).show();
-//        }
-//        if (dateField.getText().toString().equals(""))
-//        {
-//            Snackbar.make(getCurrentFocus(), "Fill it", Snackbar.LENGTH_SHORT).show();
-//        }
 
         if (sumField.getText().toString().equals(""))
         {
-            Toast.makeText(this, "Fill it, 1!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fill the Sum field!", Toast.LENGTH_LONG).show();
         }
         if (noteField.getText().toString().equals(""))
         {
-            Toast.makeText(this, "Fill it, 2!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fill the Note field!", Toast.LENGTH_LONG).show();
         }
         if (dateField.getText().toString().equals(""))
         {
-            Toast.makeText(this, "Fill it, 3!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fill the Date field!", Toast.LENGTH_LONG).show();
         }
     }
 

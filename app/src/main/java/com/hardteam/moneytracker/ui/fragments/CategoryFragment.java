@@ -47,10 +47,7 @@ public class CategoryFragment extends Fragment {
 
     @AfterViews
     void ready(){
-//        List<Category> adapterData = getDataList();
-//        CategoryAdapter categoryAdapter = new CategoryAdapter(adapterData);
-//
-//        categoryRecycleView.setAdapter(categoryAdapter);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         categoryRecycleView.setLayoutManager(linearLayoutManager);
@@ -102,13 +99,4 @@ public class CategoryFragment extends Fragment {
                 .from(Categories.class)
                 .execute();
     }
-
-//    private List<Category> getDataList() {
-//        List<Category> data = new ArrayList<>();
-//        data.add(new Category("Телефон"));
-//        data.add(new Category("Еда"));
-//        data.add(new Category("Книги"));
-//        return data;
-//    }
-
 }

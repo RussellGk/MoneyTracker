@@ -35,8 +35,6 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
 
     private static final String LOG_VIEW = ExpansesFragment.class.getSimpleName();
 
-//    private RecyclerView expensesRecycleViewNew;
-
     @ViewById(R.id.context_recyclerview)
     RecyclerView expensesRecycleView;
 
@@ -52,9 +50,6 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
     @AfterViews
     void ready()
     {
-        //List<Expense> adapterData = getDataList();
-        //ExpensesAdapter expensesAdapter = new ExpensesAdapter(adapterData);
-        //expensesRecycleView.setAdapter(expensesAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecycleView.setLayoutManager(linearLayoutManager);
@@ -65,9 +60,6 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         categoryFun.save();
         Expenses expenses = new Expenses("321","Cinema","15.12.15",categoryFun);
         expenses.save();
-
-//        Expenses expenses1 = getExpense();
-//        Log.e(LOG_VIEW, expenses1.category.toString());
 
         if (floatingActionButton.isPressed()){
             ButtonWasClicked();
