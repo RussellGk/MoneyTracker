@@ -20,8 +20,10 @@ import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.adapters.CategoryAdapter;
 import com.hardteam.moneytracker.adapters.SpinnerCategoryAdapter;
 import com.hardteam.moneytracker.database.Categories;
+import com.hardteam.moneytracker.database.Expenses;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
@@ -52,10 +54,6 @@ public class AddExpenseActivity extends AppCompatActivity {
     @AfterViews
     void ready() {
 
-        EditText sumField = (EditText)findViewById(R.id.sum_digit);
-        EditText noteField = (EditText)findViewById(R.id.note_text);
-        EditText dateField = (EditText)findViewById(R.id.date_number);
-
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
         {
@@ -65,7 +63,14 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         SpinnerCategoryAdapter spinnerAdapter = new SpinnerCategoryAdapter(getDataList());
         listSpinner.setAdapter(spinnerAdapter);
+    }
 
+    @Click(R.id.add_button_expense)
+    public void clickButton()
+    {
+        EditText sumField = (EditText)findViewById(R.id.sum_digit);
+        EditText noteField = (EditText)findViewById(R.id.note_text);
+        EditText dateField = (EditText)findViewById(R.id.date_number);
 
         if (sumField.getText().toString().equals(""))
         {
@@ -79,6 +84,14 @@ public class AddExpenseActivity extends AppCompatActivity {
         {
             Toast.makeText(this, "Fill the Date field!", Toast.LENGTH_LONG).show();
         }
+        else
+        {
+            Categories category = (Categories)listSpinner.getSelectedItem();
+            Expenses newExpense = new Expenses(sumField.getText().toString(),noteField.getText().toString(),dateField.getText().toString(),category);
+            newExpense.save();
+            back();
+        }
+
     }
 
 
