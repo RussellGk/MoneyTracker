@@ -28,6 +28,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,7 +72,11 @@ public class AddExpenseActivity extends AppCompatActivity {
     {
         EditText sumField = (EditText)findViewById(R.id.sum_digit);
         EditText noteField = (EditText)findViewById(R.id.note_text);
-        EditText dateField = (EditText)findViewById(R.id.date_number);
+
+        Date date = new Date();
+        SimpleDateFormat data_human = new SimpleDateFormat("dd.MM.yyyy");
+        String currentDate = data_human.format(date);
+
 
         if (sumField.getText().toString().equals(""))
         {
@@ -80,14 +86,11 @@ public class AddExpenseActivity extends AppCompatActivity {
         {
             Toast.makeText(this, "Fill the Note field!", Toast.LENGTH_LONG).show();
         }
-        if (dateField.getText().toString().equals(""))
-        {
-            Toast.makeText(this, "Fill the Date field!", Toast.LENGTH_LONG).show();
-        }
+
         else
         {
             Categories category = (Categories)listSpinner.getSelectedItem();
-            Expenses newExpense = new Expenses(sumField.getText().toString(),noteField.getText().toString(),dateField.getText().toString(),category);
+            Expenses newExpense = new Expenses(sumField.getText().toString(),noteField.getText().toString(),currentDate,category);
             newExpense.save();
             back();
         }

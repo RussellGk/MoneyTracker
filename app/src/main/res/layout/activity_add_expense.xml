@@ -58,7 +58,7 @@
             android:gravity="fill"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText
+        <TextView
             android:hint="@string/date_hint_text"
             android:gravity="fill"
             android:id="@+id/date_number"

@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.activeandroid.query.Select;
 import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
@@ -61,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
         setupToolbar();
         setupDrawer();
 
-        createCategories();
-
+        if(getDataList().isEmpty()) {
+            createCategories();
+        }
         if(savedInstanceState == null)
         {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment_()).commit();
@@ -80,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
         categoryFood.save();
         Categories categoryBooks = new Categories("Books");
         categoryBooks.save();
+    }
+
+    private List<Categories> getDataList()
+    {
+        return new Select()
+                .from(Categories.class)
+                .execute();
     }
 
     private void setupToolbar()
