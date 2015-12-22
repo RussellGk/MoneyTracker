@@ -15,4 +15,6 @@
     <string name="list_sum">Sum</string>
     <string name="stat_temp">Здесь будет статистика</string>
     <string name="set_temp">Здесь будут настройки</string>
+    <string name="add_button_text">Добавить</string>
+    <string name="date_hint_text">Current Date</string>
 </resources>

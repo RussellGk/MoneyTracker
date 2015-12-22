@@ -1,4 +1,4 @@
-package com.hardteam.moneytracker;
+package com.hardteam.moneytracker.ui.activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -20,33 +20,80 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.activeandroid.query.Select;
+import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.database.Categories;
+import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
+import com.hardteam.moneytracker.ui.fragments.ExpansesFragment_;
+import com.hardteam.moneytracker.ui.fragments.SettingsFragment_;
+import com.hardteam.moneytracker.ui.fragments.StatisticsFragment_;
+
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.InstanceState;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.ViewById;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@EActivity(R.layout.activity_main)
+
 public class MainActivity extends AppCompatActivity {
 
-    private static final String LOG_VIEW = MainActivity.class.getSimpleName();
-    private DrawerLayout drawerLayout;
     private Fragment fragment;
-    private NavigationView navigationView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    @ViewById
+    Toolbar toolbar;
+
+    @ViewById(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+
+    @ViewById(R.id.navigation_view)
+    NavigationView navigationView;
+
+    @InstanceState
+    Bundle savedInstanceState;
+
+    @AfterViews
+    void ready() {
+
         setupToolbar();
         setupDrawer();
 
-        if(savedInstanceState == null)// by default for fragments show
-        {
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment()).commit();
+        if(getDataList().isEmpty()) {
+            createCategories();
         }
-        Log.d(LOG_VIEW, "onCreate()");
+        if(savedInstanceState == null)
+        {
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment_()).commit();
+        }
+
+    }
+
+    private void createCategories()
+    {
+        Categories categoryFun = new Categories("Fun");
+        categoryFun.save();
+        Categories categoryPhone = new Categories("Phone");
+        categoryPhone.save();
+        Categories categoryFood = new Categories("Food");
+        categoryFood.save();
+        Categories categoryBooks = new Categories("Books");
+        categoryBooks.save();
+    }
+
+    private List<Categories> getDataList()
+    {
+        return new Select()
+                .from(Categories.class)
+                .execute();
     }
 
     private void setupToolbar()
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();//check the import android.support.v7.app.ActionBar
         if(actionBar != null)
@@ -56,28 +103,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @OptionsItem(android.R.id.home)
+    void openDrawerByButton() {
+    drawerLayout.openDrawer(GravityCompat.START);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         Menu menuItems = navigationView.getMenu();
         Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
 
-        if(findingFragment != null && findingFragment instanceof ExpansesFragment)
+        if(findingFragment != null && findingFragment instanceof ExpansesFragment_)
         {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             menuItems.findItem(R.id.drawer_expenses).setCheckable(true);
 
         }
-        if(drawerLayout.isEnabled())//WOW it's working
+        if(drawerLayout.isEnabled())
         {
-            drawerLayout.closeDrawer(navigationView);//I can't believe, its' working too :)
+            drawerLayout.closeDrawer(navigationView);
         }
     }
 
     private void setupDrawer()
     {
-        drawerLayout =(DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView)findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
         {
             @Override
@@ -86,16 +136,16 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.drawer_expenses:
-                        fragment = new ExpansesFragment();
+                        fragment = new ExpansesFragment_();
                         break;
                     case R.id.drawer_categories:
-                        fragment = new CategoryFragment();
+                        fragment = new CategoryFragment_();
                         break;
                     case R.id.drawer_statistics:
-                        fragment = new StatisticsFragment();
+                        fragment = new StatisticsFragment_();
                         break;
                     case R.id.drawer_settings:
-                        fragment = new SettingsFragment();
+                        fragment = new SettingsFragment_();
                         break;
                 }
 
@@ -105,16 +155,5 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) { //call the Drawer by push Button in Toolbar
-        int id = item.getItemId();
-        if(id == android.R.id.home)// burger button on Toolbar
-        {
-            drawerLayout.openDrawer(GravityCompat.START);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
