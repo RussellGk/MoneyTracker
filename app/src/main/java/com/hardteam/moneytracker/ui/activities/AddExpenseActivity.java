@@ -43,8 +43,6 @@ import java.util.List;
 
 public class AddExpenseActivity extends AppCompatActivity {
 
-    private static final String LOG_VIEW = AddExpenseActivity.class.getSimpleName();
-
     @ViewById
     Toolbar toolbar;//With private doesn't work
 
@@ -70,16 +68,8 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         SpinnerCategoryAdapter spinnerAdapter = new SpinnerCategoryAdapter(getDataList());
         listSpinner.setAdapter(spinnerAdapter);
-        registerUser();
     }
 
-    @Background
-    public void registerUser() //for own Activity
-    {
-        RestService restService = new RestService();
-        UserRegistrationModel userRegistrationModel = restService.register("desman2","river2");
-        Log.e(LOG_VIEW, "status: " + userRegistrationModel.getStatus() + ", id: " + userRegistrationModel.getId());
-    }
 
     @Click(R.id.add_button_expense)
     public void clickButton()

@@ -3,6 +3,7 @@
     package="com.hardteam.moneytracker" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".MoneyTrackerApplication"
@@ -19,7 +20,7 @@
             android:value="com.hardteam.moneytracker.database.Expenses, com.hardteam.moneytracker.database.Categories" />
 
         <activity
-            android:name=".ui.activities.MainActivity_"
+            android:name=".ui.activities.LoginActivity_"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -27,6 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.activities.MainActivity_">
+        <meta-data android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.activities.LoginActivity_"/>
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+
         <activity android:name=".ui.activities.AddExpenseActivity_">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity_"/>
@@ -34,3 +42,12 @@
     </application>
 
 </manifest>
+    <!--<activity-->
+    <!--android:name=".ui.activities.MainActivity_"-->
+    <!--android:label="@string/app_name"-->
+    <!--android:theme="@style/AppTheme.NoActionBar" >-->
+    <!--<intent-filter>-->
+    <!--<action android:name="android.intent.action.MAIN" />-->
+    <!--<category android:name="android.intent.category.LAUNCHER" />-->
+    <!--</intent-filter>-->
+    <!--</activity>-->
