@@ -42,12 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     @ViewById(R.id.login_activity_container)
     View loginActivityLayout;
 
-//    @AfterViews
-//     void ready()
-//    {
-//
-//    }
-
     @Click(R.id.login_button_ok)
     void loginOk()
     {
@@ -58,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-            Snackbar.make(loginActivityLayout, "No Internet connection", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(loginActivityLayout, R.string.no_internet, Snackbar.LENGTH_LONG).show();
         }
 
     }
@@ -71,21 +65,21 @@ public class LoginActivity extends AppCompatActivity {
 
         if( loginUser.length() < 5 || passwordUser.length() < 5 )
         {
-            Snackbar.make(loginActivityLayout, "Login and Password should be more than 4 characters", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(loginActivityLayout, R.string.login_pass_length, Snackbar.LENGTH_LONG).show();
         }
 
         else
         {
             RestService restService = new RestService();
             UserRegistrationModel userRegistrationModel = restService.register(loginUser, passwordUser);
-//        Log.e(LOG_VIEW, "status: " + userRegistrationModel.getStatus() + ", id: " + userRegistrationModel.getId());
+
             if(userRegistrationModel.getStatus().equalsIgnoreCase("success"))
             {
                 startMainActivity();
             }
             else
             {
-                Snackbar.make(loginActivityLayout, "Login busy already", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(loginActivityLayout, R.string.registration_busy, Snackbar.LENGTH_LONG).show();
             }
 
         }

@@ -17,4 +17,7 @@
     <string name="set_temp">Здесь будут настройки</string>
     <string name="add_button_text">Добавить</string>
     <string name="date_hint_text">Current Date</string>
+    <string name="no_internet">No Internet connection</string>
+    <string name="login_pass_length">Login and Password should be more than 4 characters</string>
+    <string name="registration_busy">Login busy already</string>
 </resources>
