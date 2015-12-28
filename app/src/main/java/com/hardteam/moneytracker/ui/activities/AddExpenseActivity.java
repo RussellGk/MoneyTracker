@@ -21,8 +21,11 @@ import com.hardteam.moneytracker.adapters.CategoryAdapter;
 import com.hardteam.moneytracker.adapters.SpinnerCategoryAdapter;
 import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.database.Expenses;
+import com.hardteam.moneytracker.rest.RestService;
+import com.hardteam.moneytracker.rest.model.UserRegistrationModel;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
@@ -66,6 +69,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         SpinnerCategoryAdapter spinnerAdapter = new SpinnerCategoryAdapter(getDataList());
         listSpinner.setAdapter(spinnerAdapter);
     }
+
 
     @Click(R.id.add_button_expense)
     public void clickButton()

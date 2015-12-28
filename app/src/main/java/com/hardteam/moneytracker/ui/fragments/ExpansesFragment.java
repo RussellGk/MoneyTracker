@@ -9,6 +9,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.activeandroid.query.Select;
 
@@ -16,9 +17,12 @@ import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.adapters.ExpensesAdapter;
 import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.database.Expenses;
+import com.hardteam.moneytracker.rest.RestService;
+import com.hardteam.moneytracker.rest.model.UserRegistrationModel;
 import com.hardteam.moneytracker.ui.activities.AddExpenseActivity_;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -48,13 +52,12 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
     }
 
     @AfterViews
-    void ready()
-    {
+    void ready() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         expensesRecycleView.setLayoutManager(linearLayoutManager);
 
-        if (floatingActionButton.isPressed()){
+        if (floatingActionButton.isPressed()) {
             ButtonWasClicked();
         }
         getActivity().setTitle(getString(R.string.nav_drawer_expenses));
@@ -66,9 +69,8 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         loadData();
     }
 
-    private void loadData()
-    {
-        getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Expenses>>(){
+    private void loadData() {
+        getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Expenses>>() {
             @Override
             public Loader<List<Expenses>> onCreateLoader(int id, Bundle args) {//import android.support.v4.content.AsyncTaskLoader;
                 final AsyncTaskLoader<List<Expenses>> loader = new AsyncTaskLoader<List<Expenses>>(getActivity()) {
@@ -95,11 +97,9 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         });
     }
 
-    private List<Expenses> getDataList()
-    {
+    private List<Expenses> getDataList() {
         return new Select()
                 .from(Expenses.class)
                 .execute();
     }
-
 }
