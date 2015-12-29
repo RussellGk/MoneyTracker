@@ -20,7 +20,7 @@
             android:value="com.hardteam.moneytracker.database.Expenses, com.hardteam.moneytracker.database.Categories" />
 
         <activity
-            android:name=".ui.activities.LoginActivity_"
+            android:name=".ui.activities.TokenActivity_"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -29,16 +29,35 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activities.MainActivity_">
+        <activity
+            android:name=".ui.activities.LoginActivity_"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.TokenActivity_"/>
+        </activity>
+
+        <activity android:name=".ui.activities.MainActivity_"
+            android:theme="@style/AppTheme.NoActionBar" >
         <meta-data android:name="android.support.PARENT_ACTIVITY"
             android:value=".ui.activities.LoginActivity_"/>
-            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 
         <activity android:name=".ui.activities.AddExpenseActivity_">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity_"/>
         </activity>
+
+
     </application>
 
 </manifest>
+
+<!--<activity-->
+<!--android:name=".ui.activities.LoginActivity_"-->
+<!--android:label="@string/app_name"-->
+<!--android:theme="@style/AppTheme.NoActionBar" >-->
+<!--<intent-filter>-->
+    <!--<action android:name="android.intent.action.MAIN" />-->
+    <!--<category android:name="android.intent.category.LAUNCHER" />-->
+<!--</intent-filter>-->
+<!--</activity>-->

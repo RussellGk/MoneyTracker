@@ -1,6 +1,9 @@
 package com.hardteam.moneytracker.rest;
 
+import com.hardteam.moneytracker.rest.api.CreateCategoryApi;
+import com.hardteam.moneytracker.rest.api.LoginUserApi;
 import com.hardteam.moneytracker.rest.api.RegisterUserApi;
+import com.hardteam.moneytracker.rest.model.CreateCategory;
 
 import retrofit.RestAdapter;
 
@@ -12,6 +15,9 @@ public class RestClient {
     private RegisterUserApi registerUserApi;
     // var1 for next request
 
+    private LoginUserApi loginUserApi;
+    private CreateCategoryApi createCategoryApi;
+
     public RestClient()
     {
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -21,9 +27,22 @@ public class RestClient {
 
         registerUserApi = restAdapter.create(RegisterUserApi.class);
         // init for var1 for next Adapter
+
+        loginUserApi = restAdapter.create(LoginUserApi.class);
+
+        createCategoryApi = restAdapter.create(CreateCategoryApi.class);
     }
 
     public RegisterUserApi getRegisterUserApi() {
         return registerUserApi;
+    }
+
+    public LoginUserApi getLoginUserApi()
+    {
+        return loginUserApi;
+    }
+
+    public CreateCategoryApi getCreateCategoryApi() {
+        return createCategoryApi;
     }
 }
