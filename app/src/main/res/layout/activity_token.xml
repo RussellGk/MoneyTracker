@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/token_activity"
+    android:background="@color/green">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/padding_top_linear"
+        android:paddingLeft="@dimen/padding_left_right_linear"
+        android:paddingRight="@dimen/padding_left_right_linear"
+        android:background="@color/green">
+
+        <EditText
+            android:hint="Login"
+            android:paddingLeft="@dimen/padding_left_text"
+            android:id="@+id/login_field_token"
+            android:maxLength="10"
+            android:layout_marginTop="@dimen/layout_margin_top"
+            android:textSize="@dimen/text_size_login"
+            android:singleLine="true"
+            android:inputType="text"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height_text_field"/>
+        <EditText
+            android:hint="Password"
+            android:paddingLeft="@dimen/padding_left_text"
+            android:id="@+id/password_field_token"
+            android:maxLength="10"
+            android:layout_marginTop="@dimen/layout_margin_top"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_login"
+            android:inputType="textPassword"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height_text_field"/>
+        <Button
+            android:id="@+id/token_button_get"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_top"
+            android:padding="@dimen/padding_button"
+            android:textColor="@color/green"
+            android:text="Get Token"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registration_token_text"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/padding_top"
+            android:padding="@dimen/padding_button"
+            android:text="No account yet? Register one"
+            android:gravity="center"
+            android:textSize="16dip"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
