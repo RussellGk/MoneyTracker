@@ -93,7 +93,6 @@ public class TokenActivity extends AppCompatActivity{
             if(userLoginModel.getStatus().equalsIgnoreCase("success"))
             {
                 MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
-                CreateCategory createCategory = restService.createCategory("Test1");
                 startMainActivity();
             }
             else if(userLoginModel.getStatus().equalsIgnoreCase("Wrong password"))
