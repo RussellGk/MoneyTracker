@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.hardteam.moneytracker.MoneyTrackerApplication;
 import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.rest.RestService;
+import com.hardteam.moneytracker.rest.model.UserLoginModel;
 import com.hardteam.moneytracker.rest.model.UserRegistrationModel;
 import com.hardteam.moneytracker.util.NetworkStatusChecker;
 
@@ -75,6 +77,9 @@ public class LoginActivity extends AppCompatActivity {
 
             if(userRegistrationModel.getStatus().equalsIgnoreCase("success"))
             {
+                UserLoginModel userLoginModel = restService.login(loginUser,passwordUser);
+                MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
+
                 startMainActivity();
             }
             else
