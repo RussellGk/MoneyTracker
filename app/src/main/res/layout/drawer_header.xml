@@ -6,14 +6,24 @@
     android:orientation="vertical"
     android:paddingTop="@dimen/padding_top"
     android:paddingLeft="@dimen/padding_left"
-    android:paddingBottom="@dimen/padding_bottom"
+    android:paddingBottom="@dimen/padding_header_bottom"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/avatar_layout"
+        android:paddingBottom="56dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+     <ImageView
         android:layout_width="@dimen/photo_radius"
         android:layout_height="@dimen/photo_radius"
         android:id="@+id/photo"
         android:src="@mipmap/photo"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

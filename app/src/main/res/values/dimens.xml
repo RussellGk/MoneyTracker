@@ -4,9 +4,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="drawer_header_height">172dp</dimen>
-    <dimen name="padding_top">24dp</dimen>
+    <dimen name="padding_top">25dp</dimen>
     <dimen name="padding_left">16dp</dimen>
     <dimen name="padding_bottom">16dp</dimen>
+    <dimen name="padding_header_bottom">8dp</dimen>
     <dimen name="padding_from_button">56dp</dimen>
     <dimen name="photo_radius">64dp</dimen>
     <dimen name="text_ini">14sp</dimen>
@@ -17,7 +18,7 @@
     <dimen name="card_layout_margin">5dp</dimen>
     <dimen name="fab_elevation">4dp</dimen>
     <dimen name="text_size_login">16sp</dimen>
-    <dimen name="padding_top_linear">72dp</dimen>
+    <dimen name="padding_top_linear">56dp</dimen>
     <dimen name="padding_left_right_linear">24dp</dimen>
     <dimen name="padding_left_text">8dp</dimen>
     <dimen name="padding_button">24dp</dimen>
