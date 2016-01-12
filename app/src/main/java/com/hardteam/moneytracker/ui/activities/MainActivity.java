@@ -30,6 +30,7 @@ import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
 import com.hardteam.moneytracker.ui.fragments.ExpansesFragment_;
 import com.hardteam.moneytracker.ui.fragments.SettingsFragment_;
 import com.hardteam.moneytracker.ui.fragments.StatisticsFragment_;
+import com.hardteam.moneytracker.util.Constants;
 
 
 import org.androidannotations.annotations.AfterViews;
@@ -82,13 +83,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void createCategories()
     {
-        Categories categoryFun = new Categories("Fun");
+        Categories categoryFun = new Categories(Constants.fun);
         categoryFun.save();
-        Categories categoryPhone = new Categories("Phone");
+        Categories categoryPhone = new Categories(Constants.phone);
         categoryPhone.save();
-        Categories categoryFood = new Categories("Food");
+        Categories categoryFood = new Categories(Constants.food);
         categoryFood.save();
-        Categories categoryBooks = new Categories("Books");
+        Categories categoryBooks = new Categories(Constants.books);
         categoryBooks.save();
     }
 
@@ -143,13 +144,13 @@ public class MainActivity extends AppCompatActivity {
         for(Categories itemCatList : catList)
         {
             CreateCategory createCategory = restService.createCategory(itemCatList.name);
-            if(createCategory.getStatus().equalsIgnoreCase("success"))
+            if(createCategory.getStatus().equalsIgnoreCase(Constants.success))
             {
-                Log.d(LOG_VIEW,"Status: " + createCategory.getStatus() + ", Title: "
-                    + createCategory.getData().getTitle() + ", Id: "
-                    + createCategory.getData().getId());
+                Log.d(LOG_VIEW, "Status: " + createCategory.getStatus() + ", Title: "
+                        + createCategory.getData().getTitle() + ", Id: "
+                        + createCategory.getData().getId());
             }
-            else if(createCategory.getStatus().equalsIgnoreCase("unauthorized"))
+            else if(createCategory.getStatus().equalsIgnoreCase(Constants.unauthorized))
             {
                 startTokenActivity();
             }

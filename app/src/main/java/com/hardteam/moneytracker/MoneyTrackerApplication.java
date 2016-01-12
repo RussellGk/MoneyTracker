@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.app.Application;
+import com.hardteam.moneytracker.util.Constants;
 
 /**
  * Created by RG on 16.12.2015.
@@ -12,7 +13,6 @@ import com.activeandroid.app.Application;
 public class MoneyTrackerApplication extends Application {
 
     private static SharedPreferences preferences;//save the Token here
-    private static final String TOKEN_KEY = "token_key";
 
     @Override
     public void onCreate() {
@@ -25,7 +25,7 @@ public class MoneyTrackerApplication extends Application {
     public static void setAuthToken(String token)
     {
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(TOKEN_KEY, token);
+        editor.putString(Constants.TOKEN_KEY, token);
 //        editor.commit(); save immediatly in UA thread
         editor.apply();
         editor.commit();
@@ -33,6 +33,6 @@ public class MoneyTrackerApplication extends Application {
     }
 
     public static String getAuthKey() {
-        return preferences.getString(TOKEN_KEY,"");//"" - default value, it needs for Splash Activity
+        return preferences.getString(Constants.TOKEN_KEY,"");//"" - default value, it needs for Splash Activity
     }
 }

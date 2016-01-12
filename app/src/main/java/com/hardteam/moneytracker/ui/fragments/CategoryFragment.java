@@ -17,6 +17,7 @@ import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.adapters.ExpensesAdapter;
 import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.database.Expenses;
+import com.hardteam.moneytracker.util.Constants;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -42,7 +43,7 @@ public class CategoryFragment extends Fragment {
 
     @Click(R.id.fab_category)
     void myButtonWasClicked() {
-        Snackbar.make(getView(), "Work", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getView(), Constants.work, Snackbar.LENGTH_SHORT).show();
     }
 
     @AfterViews

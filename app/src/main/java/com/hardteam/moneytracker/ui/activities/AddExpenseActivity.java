@@ -23,6 +23,7 @@ import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.database.Expenses;
 import com.hardteam.moneytracker.rest.RestService;
 import com.hardteam.moneytracker.rest.model.UserRegistrationModel;
+import com.hardteam.moneytracker.util.Constants;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -63,7 +64,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            setTitle("Добавить Трату");
+            setTitle(Constants.expenseAdd);
         }
 
         SpinnerCategoryAdapter spinnerAdapter = new SpinnerCategoryAdapter(getDataList());
@@ -84,11 +85,11 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         if (sumField.getText().toString().equals(""))
         {
-            Toast.makeText(this, "Fill the Sum field!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Constants.fillSumField, Toast.LENGTH_LONG).show();
         }
         if (noteField.getText().toString().equals(""))
         {
-            Toast.makeText(this, "Fill the Note field!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Constants.fillNoteField, Toast.LENGTH_LONG).show();
         }
 
         else

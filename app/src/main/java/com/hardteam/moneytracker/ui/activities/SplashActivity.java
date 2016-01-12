@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.hardteam.moneytracker.MoneyTrackerApplication;
 import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.util.Constants;
 import com.hardteam.moneytracker.util.NetworkStatusChecker;
 
 import org.androidannotations.annotations.AfterViews;
@@ -35,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         }
         else
         {
-            Snackbar.make(welcomeActivitySplash, R.string.no_internet, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(welcomeActivitySplash, Constants.noInternet, Snackbar.LENGTH_LONG).show();
         }
     }
 

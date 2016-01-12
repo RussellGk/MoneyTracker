@@ -15,6 +15,7 @@ import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.rest.RestService;
 import com.hardteam.moneytracker.rest.model.UserLoginModel;
 import com.hardteam.moneytracker.rest.model.UserRegistrationModel;
+import com.hardteam.moneytracker.util.Constants;
 import com.hardteam.moneytracker.util.NetworkStatusChecker;
 
 import org.androidannotations.annotations.AfterViews;
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-            Snackbar.make(loginActivityLayout, R.string.no_internet, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(loginActivityLayout, Constants.noInternet, Snackbar.LENGTH_LONG).show();
         }
 
     }
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if( loginUser.length() < 5 || passwordUser.length() < 5 )
         {
-            Snackbar.make(loginActivityLayout, R.string.login_pass_length, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(loginActivityLayout, Constants.loginPassLength, Snackbar.LENGTH_LONG).show();
         }
 
         else
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             RestService restService = new RestService();
             UserRegistrationModel userRegistrationModel = restService.register(loginUser, passwordUser);
 
-            if(userRegistrationModel.getStatus().equalsIgnoreCase("success"))
+            if(userRegistrationModel.getStatus().equalsIgnoreCase(Constants.success))
             {
                 UserLoginModel userLoginModel = restService.login(loginUser,passwordUser);
                 MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             else
             {
-                Snackbar.make(loginActivityLayout, R.string.registration_busy, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(loginActivityLayout, Constants.registrationBusy, Snackbar.LENGTH_LONG).show();
             }
 
         }

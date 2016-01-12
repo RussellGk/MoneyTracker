@@ -4,6 +4,7 @@ import com.hardteam.moneytracker.rest.api.CreateCategoryApi;
 import com.hardteam.moneytracker.rest.api.LoginUserApi;
 import com.hardteam.moneytracker.rest.api.RegisterUserApi;
 import com.hardteam.moneytracker.rest.model.CreateCategory;
+import com.hardteam.moneytracker.util.Constants;
 
 import retrofit.RestAdapter;
 
@@ -11,7 +12,7 @@ import retrofit.RestAdapter;
  * Created by RG on 23.12.2015.
  */
 public class RestClient {
-    private static final String BASE_URL = "http://lmt.loftblog.tmweb.ru";
+    private static final String BASE_URL = Constants.baseURL;
     private RegisterUserApi registerUserApi;
     // var1 for next request
 

@@ -14,6 +14,7 @@ import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.rest.RestService;
 import com.hardteam.moneytracker.rest.model.CreateCategory;
 import com.hardteam.moneytracker.rest.model.UserLoginModel;
+import com.hardteam.moneytracker.util.Constants;
 import com.hardteam.moneytracker.util.NetworkStatusChecker;
 
 import org.androidannotations.annotations.AfterViews;
@@ -29,8 +30,6 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_token)
 public class TokenActivity extends AppCompatActivity{
 
-    private final static String LOG_VIEW = TokenActivity.class.getSimpleName();
-
     @ViewById(R.id.login_field_token)
     EditText loginFieldToken;
 
@@ -43,9 +42,6 @@ public class TokenActivity extends AppCompatActivity{
     @ViewById(R.id.token_activity)
     View tokenActivityLayout;
 
-    //@ViewById(R.id.registration_token_text)
-    //TextView tokenText;
-
     @Click(R.id.token_button_get)
     void buttonToken()
     {
@@ -56,7 +52,7 @@ public class TokenActivity extends AppCompatActivity{
         }
         else
         {
-            Snackbar.make(tokenActivityLayout, R.string.no_internet, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(tokenActivityLayout, Constants.noInternet, Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -65,13 +61,6 @@ public class TokenActivity extends AppCompatActivity{
     {
         startRegistrationActivity();
     }
-
-//    @AfterViews
-//    void ready()
-//    {
-//        //Check all cases for Login, Password, Internet and etc...
-//        login();
-//    }
 
     @Background
     void tokenIn()
@@ -82,7 +71,7 @@ public class TokenActivity extends AppCompatActivity{
 
         if( loginUserToken.length() < 5 || passwordUserToken.length() < 5 )
         {
-            Snackbar.make(tokenActivityLayout, R.string.login_pass_length, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(tokenActivityLayout, Constants.loginPassLength, Snackbar.LENGTH_LONG).show();
         }
 
         else
@@ -90,38 +79,24 @@ public class TokenActivity extends AppCompatActivity{
             RestService restService = new RestService();
             UserLoginModel userLoginModel = restService.login(loginUserToken,passwordUserToken);
 
-            if(userLoginModel.getStatus().equalsIgnoreCase("success"))
+            if(userLoginModel.getStatus().equalsIgnoreCase(Constants.success))
             {
                 MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
                 startMainActivity();
             }
-            else if(userLoginModel.getStatus().equalsIgnoreCase("Wrong password"))
+            else if(userLoginModel.getStatus().equalsIgnoreCase(Constants.wrongPassword))
             {
-                Snackbar.make(tokenActivityLayout, "Wrong password", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(tokenActivityLayout, Constants.wrongPassword, Snackbar.LENGTH_LONG).show();
             }
-            else if(userLoginModel.getStatus().equalsIgnoreCase("Wrong login"))
+            else if(userLoginModel.getStatus().equalsIgnoreCase(Constants.wrongLogin))
             {
-                Snackbar.make(tokenActivityLayout, "Wrong login", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(tokenActivityLayout, Constants.wrongLogin, Snackbar.LENGTH_LONG).show();
             }
-            else if(userLoginModel.getStatus().equalsIgnoreCase("Error"))
+            else if(userLoginModel.getStatus().equalsIgnoreCase(Constants.error))
             {
-                Snackbar.make(tokenActivityLayout, "Error", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(tokenActivityLayout, Constants.error, Snackbar.LENGTH_LONG).show();
             }
-
-//            MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
-
-//            Log.d(LOG_VIEW, "Status: " + userLoginModel.getStatus() + ", token: "
-//                    + MoneyTrackerApplication.getAuthKey());
-//            CreateCategory createCategory = restService.createCategory("Test1");
-
-//            Log.d(LOG_VIEW,"Status: " + createCategory.getStatus() + ", Title: "
-//                    + createCategory.getData().getTitle() + ", Id: "
-//                    + createCategory.getData().getId());
         }
-
-
-//        Log.d(LOG_VIEW, "Status: " + userLoginModel.getStatus() + ", token: "
-//                + userLoginModel.getAuthToken());
     }
 
     public void startMainActivity()
