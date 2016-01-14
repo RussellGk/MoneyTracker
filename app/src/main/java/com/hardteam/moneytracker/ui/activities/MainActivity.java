@@ -1,6 +1,7 @@
 package com.hardteam.moneytracker.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -23,13 +24,17 @@ import android.widget.ListView;
 import com.activeandroid.query.Select;
 import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.database.Categories;
+import com.hardteam.moneytracker.rest.RestService;
+import com.hardteam.moneytracker.rest.model.CreateCategory;
 import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
 import com.hardteam.moneytracker.ui.fragments.ExpansesFragment_;
 import com.hardteam.moneytracker.ui.fragments.SettingsFragment_;
 import com.hardteam.moneytracker.ui.fragments.StatisticsFragment_;
+import com.hardteam.moneytracker.util.Constants;
 
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OptionsItem;
@@ -41,6 +46,8 @@ import java.util.List;
 @EActivity(R.layout.activity_main)
 
 public class MainActivity extends AppCompatActivity {
+
+    private final static String LOG_VIEW = MainActivity.class.getSimpleName();
 
     private Fragment fragment;
 
@@ -70,17 +77,19 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment_()).commit();
         }
 
+        addCategoriesToServer(getDataList());
+
     }
 
     private void createCategories()
     {
-        Categories categoryFun = new Categories("Fun");
+        Categories categoryFun = new Categories(Constants.fun);
         categoryFun.save();
-        Categories categoryPhone = new Categories("Phone");
+        Categories categoryPhone = new Categories(Constants.phone);
         categoryPhone.save();
-        Categories categoryFood = new Categories("Food");
+        Categories categoryFood = new Categories(Constants.food);
         categoryFood.save();
-        Categories categoryBooks = new Categories("Books");
+        Categories categoryBooks = new Categories(Constants.books);
         categoryBooks.save();
     }
 
@@ -124,6 +133,34 @@ public class MainActivity extends AppCompatActivity {
         {
             drawerLayout.closeDrawer(navigationView);
         }
+    }
+
+    @Background
+    void addCategoriesToServer(List<Categories> catList)
+    {
+
+        RestService restService = new RestService();
+
+        for(Categories itemCatList : catList)
+        {
+            CreateCategory createCategory = restService.createCategory(itemCatList.name);
+            if(createCategory.getStatus().equalsIgnoreCase(Constants.success))
+            {
+                Log.d(LOG_VIEW, "Status: " + createCategory.getStatus() + ", Title: "
+                        + createCategory.getData().getTitle() + ", Id: "
+                        + createCategory.getData().getId());
+            }
+            else if(createCategory.getStatus().equalsIgnoreCase(Constants.unauthorized))
+            {
+                startLoginActivity();
+            }
+        }
+    }
+
+    public void startLoginActivity()
+    {
+        Intent intentLoginActivity = new Intent(this, LoginActivity_.class);
+        startActivity(intentLoginActivity);
     }
 
     private void setupDrawer()

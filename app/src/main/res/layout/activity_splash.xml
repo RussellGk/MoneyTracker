@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/welcome_activity_splash"
+    android:background="@color/green">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/padding_top_linear"
+        android:paddingLeft="@dimen/padding_left_right_linear"
+        android:paddingRight="@dimen/padding_left_right_linear"
+        android:background="@color/green">
+
+        <ImageView
+            android:id="@+id/welcome_photo"
+            android:src="@mipmap/logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>
