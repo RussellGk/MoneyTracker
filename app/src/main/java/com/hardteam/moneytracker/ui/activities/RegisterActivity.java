@@ -24,24 +24,24 @@ import org.androidannotations.annotations.ViewById;
  * Created by RG on 25.12.2015.
  */
 
-@EActivity(R.layout.activity_registr)
-public class RegistrActivity extends AppCompatActivity {
+@EActivity(R.layout.activity_register)
+public class RegisterActivity extends AppCompatActivity {
 
-    private static final String LOG_VIEW = RegistrActivity.class.getSimpleName();
+    private static final String LOG_VIEW = RegisterActivity.class.getSimpleName();
 
-    @ViewById(R.id.login_field)
-    EditText loginField;
+    @ViewById(R.id.register_field)
+    EditText registerField;
 
     @ViewById(R.id.password_field)
     EditText passField;
 
-    @ViewById(R.id.login_button_ok)
+    @ViewById(R.id.register_button_ok)
     Button buttonOk;
 
-    @ViewById(R.id.login_activity_container)
-    View loginActivityLayout;
+    @ViewById(R.id.register_activity_container)
+    View registerActivityLayout;
 
-    @Click(R.id.login_button_ok)
+    @Click(R.id.register_button_ok)
     void loginOk()
     {
 
@@ -51,7 +51,7 @@ public class RegistrActivity extends AppCompatActivity {
         }
         else
         {
-            Snackbar.make(loginActivityLayout, Constants.noInternet, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(registerActivityLayout, Constants.noInternet, Snackbar.LENGTH_LONG).show();
         }
 
     }
@@ -59,12 +59,12 @@ public class RegistrActivity extends AppCompatActivity {
     @Background
     public void registerUser()
     {
-        String loginUser = loginField.getText().toString();
+        String loginUser = registerField.getText().toString();
         String passwordUser = passField.getText().toString();
 
         if( loginUser.length() < 5 || passwordUser.length() < 5 )
         {
-            Snackbar.make(loginActivityLayout, Constants.loginPassLength, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(registerActivityLayout, Constants.loginPassLength, Snackbar.LENGTH_LONG).show();
         }
 
         else
@@ -81,7 +81,7 @@ public class RegistrActivity extends AppCompatActivity {
             }
             else
             {
-                Snackbar.make(loginActivityLayout, Constants.registrationBusy, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(registerActivityLayout, Constants.registrationBusy, Snackbar.LENGTH_LONG).show();
             }
 
         }

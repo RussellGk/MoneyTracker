@@ -26,48 +26,48 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity{
 
-    @ViewById(R.id.login_field_token)
-    EditText loginFieldToken;
+    @ViewById(R.id.login_field_login)
+    EditText loginFieldLogin;
 
-    @ViewById(R.id.password_field_token)
-    EditText passFieldToken;
+    @ViewById(R.id.password_field_login)
+    EditText passFieldLogin;
 
-    @ViewById(R.id.token_button_get)
-    Button buttonToken;//Login
+    @ViewById(R.id.login_button_get)
+    Button buttonLogin;
 
-    @ViewById(R.id.token_activity)
-    View tokenActivityLayout;
+    @ViewById(R.id.login_activity)
+    View loginActivityLayout;
 
-    @Click(R.id.token_button_get)
-    void buttonToken()//Login
+    @Click(R.id.login_button_get)
+    void buttonLogin()
     {
 
         if(NetworkStatusChecker.isNetworkAvailable(this))
         {
-            tokenIn();
+            LogIn();
         }
         else
         {
-            Snackbar.make(tokenActivityLayout, Constants.noInternet, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(loginActivityLayout, Constants.noInternet, Snackbar.LENGTH_LONG).show();
         }
     }
 
-    @Click(R.id.registration_token_text)
+    @Click(R.id.registration_text)
     void textClickRegistration()
     {
         startRegistrationActivity();
     }
 
     @Background
-    void tokenIn()
+    void LogIn()
     {
 
-        String loginUserToken = loginFieldToken.getText().toString();
-        String passwordUserToken = passFieldToken.getText().toString();
+        String loginUserToken = loginFieldLogin.getText().toString();
+        String passwordUserToken = passFieldLogin.getText().toString();
 
         if( loginUserToken.length() < 5 || passwordUserToken.length() < 5 )
         {
-            Snackbar.make(tokenActivityLayout, Constants.loginPassLength, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(loginActivityLayout, Constants.loginPassLength, Snackbar.LENGTH_LONG).show();
         }
 
         else
@@ -82,15 +82,15 @@ public class LoginActivity extends AppCompatActivity{
             }
             else if(userLoginModel.getStatus().equalsIgnoreCase(Constants.wrongPassword))
             {
-                Snackbar.make(tokenActivityLayout, Constants.wrongPassword, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(loginActivityLayout, Constants.wrongPassword, Snackbar.LENGTH_LONG).show();
             }
             else if(userLoginModel.getStatus().equalsIgnoreCase(Constants.wrongLogin))
             {
-                Snackbar.make(tokenActivityLayout, Constants.wrongLogin, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(loginActivityLayout, Constants.wrongLogin, Snackbar.LENGTH_LONG).show();
             }
             else if(userLoginModel.getStatus().equalsIgnoreCase(Constants.error))
             {
-                Snackbar.make(tokenActivityLayout, Constants.error, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(loginActivityLayout, Constants.error, Snackbar.LENGTH_LONG).show();
             }
         }
     }
@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity{
 
     public void startRegistrationActivity()
     {
-        Intent intentRegistrationActivity = new Intent(this, RegistrActivity_.class);
+        Intent intentRegistrationActivity = new Intent(this, RegisterActivity_.class);
         startActivity(intentRegistrationActivity);
     }
 

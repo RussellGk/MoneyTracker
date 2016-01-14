@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:id="@+id/token_activity"
+    android:id="@+id/login_activity"
     android:background="@color/green">
 
     <LinearLayout
@@ -18,7 +18,7 @@
         <EditText
             android:hint="Login"
             android:paddingLeft="@dimen/padding_left_text"
-            android:id="@+id/login_field_token"
+            android:id="@+id/login_field_login"
             android:maxLength="10"
             android:layout_marginTop="@dimen/layout_margin_top"
             android:textSize="@dimen/text_size_login"
@@ -30,7 +30,7 @@
         <EditText
             android:hint="Password"
             android:paddingLeft="@dimen/padding_left_text"
-            android:id="@+id/password_field_token"
+            android:id="@+id/password_field_login"
             android:maxLength="10"
             android:layout_marginTop="@dimen/layout_margin_top"
             android:singleLine="true"
@@ -40,21 +40,21 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_height_text_field"/>
         <Button
-            android:id="@+id/token_button_get"
+            android:id="@+id/login_button_get"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_top"
             android:padding="@dimen/padding_button"
             android:textColor="@color/green"
-            android:text="Login"/>
+            android:text="@string/button_login"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/registration_token_text"
+            android:id="@+id/registration_text"
             android:textColor="@color/white"
             android:layout_marginTop="@dimen/padding_top"
             android:padding="@dimen/padding_button"
-            android:text="No account yet? Sign up"
+            android:text="@string/registration_text_view"
             android:gravity="center"
             android:textSize="16dip"/>
 

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:id="@+id/login_activity_container"
+    android:id="@+id/register_activity_container"
     android:background="@color/green">
 
     <LinearLayout
@@ -17,7 +17,7 @@
         <EditText
             android:hint="Login"
             android:paddingLeft="@dimen/padding_left_text"
-            android:id="@+id/login_field"
+            android:id="@+id/register_field"
             android:maxLength="10"
             android:layout_marginTop="@dimen/layout_margin_top"
             android:textSize="@dimen/text_size_login"
@@ -40,13 +40,13 @@
             android:layout_height="@dimen/layout_height_text_field"/>
 
         <Button
-            android:id="@+id/login_button_ok"
+            android:id="@+id/register_button_ok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_top"
             android:padding="@dimen/padding_button"
             android:textColor="@color/green"
-            android:text="Sign up"/>
+            android:text="@string/button_sign_up"/>
     </LinearLayout>
 
 </RelativeLayout>
