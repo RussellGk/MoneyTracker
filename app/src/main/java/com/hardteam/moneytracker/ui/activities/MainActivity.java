@@ -152,15 +152,15 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(createCategory.getStatus().equalsIgnoreCase(Constants.unauthorized))
             {
-                startTokenActivity();
+                startLoginActivity();
             }
         }
     }
 
-    public void startTokenActivity()
+    public void startLoginActivity()
     {
-        Intent intentTokenActivity = new Intent(this, TokenActivity_.class);
-        startActivity(intentTokenActivity);
+        Intent intentLoginActivity = new Intent(this, LoginActivity_.class);
+        startActivity(intentLoginActivity);
     }
 
     private void setupDrawer()

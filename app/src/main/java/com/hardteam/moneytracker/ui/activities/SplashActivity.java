@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
             }
          else
             {
-                startTokenActivity();
+                startLoginActivity();
             }
     }
 
@@ -65,9 +65,9 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(intentMainActivity);
     }
 
-    public void startTokenActivity()
+    public void startLoginActivity()
     {
-        Intent intentTokenActivity = new Intent(this, TokenActivity_.class);
-        startActivity(intentTokenActivity);
+        Intent intentLoginActivity = new Intent(this, LoginActivity_.class);
+        startActivity(intentLoginActivity);
     }
 }
