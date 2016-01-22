@@ -26,6 +26,7 @@ import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.rest.RestService;
 import com.hardteam.moneytracker.rest.model.CreateCategory;
+import com.hardteam.moneytracker.sync.TrackerSyncAdapter;
 import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
 import com.hardteam.moneytracker.ui.fragments.ExpansesFragment_;
 import com.hardteam.moneytracker.ui.fragments.SettingsFragment_;
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         addCategoriesToServer(getDataList());
+
+        TrackerSyncAdapter.initializeSyncAdapter(this); // Init of SyncAdapter
 
     }
 

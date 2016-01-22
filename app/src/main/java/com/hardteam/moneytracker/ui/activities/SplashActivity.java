@@ -46,10 +46,12 @@ public class SplashActivity extends AppCompatActivity {
          if(tokenIsExist().length() != 0)
             {
                 startMainActivity();
+                finish();
             }
          else
             {
                 startLoginActivity();
+                finish();
             }
     }
 
