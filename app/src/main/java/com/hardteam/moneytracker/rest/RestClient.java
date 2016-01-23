@@ -1,5 +1,6 @@
 package com.hardteam.moneytracker.rest;
 
+import com.hardteam.moneytracker.rest.api.CategorySynchApi;
 import com.hardteam.moneytracker.rest.api.CreateCategoryApi;
 import com.hardteam.moneytracker.rest.api.LoginUserApi;
 import com.hardteam.moneytracker.rest.api.RegisterUserApi;
@@ -18,6 +19,7 @@ public class RestClient {
 
     private LoginUserApi loginUserApi;
     private CreateCategoryApi createCategoryApi;
+    private CategorySynchApi categorySynchApi;
 
     public RestClient()
     {
@@ -32,6 +34,8 @@ public class RestClient {
         loginUserApi = restAdapter.create(LoginUserApi.class);
 
         createCategoryApi = restAdapter.create(CreateCategoryApi.class);
+
+        categorySynchApi = restAdapter.create(CategorySynchApi.class);
     }
 
     public RegisterUserApi getRegisterUserApi() {
@@ -45,5 +49,9 @@ public class RestClient {
 
     public CreateCategoryApi getCreateCategoryApi() {
         return createCategoryApi;
+    }
+
+    public CategorySynchApi getCategorySynchApi() {
+        return categorySynchApi;
     }
 }

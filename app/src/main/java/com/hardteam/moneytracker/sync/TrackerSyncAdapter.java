@@ -6,13 +6,28 @@ import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
+import com.activeandroid.query.Select;
+import com.google.gson.Gson;
 import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.database.Categories;
+import com.hardteam.moneytracker.rest.RestService;
+import com.hardteam.moneytracker.rest.model.CreateCategory;
+import com.hardteam.moneytracker.rest.model.Data;
+import com.hardteam.moneytracker.rest.model.SynchCategory;
+import com.hardteam.moneytracker.ui.activities.LoginActivity_;
+import com.hardteam.moneytracker.util.Constants;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by RG on 22.01.2016.
@@ -30,6 +45,18 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // different requests
         Log.e(LOG_VIEW, "Syncing method was called!");
+
+        RestService restService = new RestService();
+        SynchCategory synchCategory = restService.synchCategory(addCategoriesToServerSynch());
+
+        if(synchCategory.getStatus().equalsIgnoreCase(Constants.success)) {
+            Log.d(LOG_VIEW, "Status: " + synchCategory.getStatus());
+        }
+        else if(synchCategory.getStatus().equalsIgnoreCase(Constants.error))
+        {
+            //startLoginActivity();
+            System.out.println("EEERRROOORRRR!!!!!!!!!!");
+        }
     }
 
     public static void syncImmediately(Context context)
@@ -85,5 +112,46 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
     {
         getSyncAccount(context);
     }
+
+    private List<Categories> getDataList()
+    {
+        return new Select()
+                .from(Categories.class)
+                .execute();
+    }
+
+    public String addCategoriesToServerSynch()
+    {
+        List<Categories> catList = getDataList();
+
+        ArrayList<String> data = new ArrayList<>();
+        Data eachData = new Data();
+        Gson gson = new Gson();
+
+        for(Categories itemCatList : catList)
+
+        {
+            eachData.setTitle(itemCatList.toString());
+            eachData.setId(itemCatList.hashCode());
+            data.add(gson.toJson(eachData));
+//            String nameData = itemCatList.name;
+
+//            Integer idData = itemCatList.getId().intValue();
+
+//            Data eachData = new Data();
+//            eachData.setId(idData);
+//            eachData.setId(i++);
+//            eachData.setTitle(nameData);
+//            data.add(eachData);
+        }
+
+        return data.toString();
+    }
+
+//    public void startLoginActivity()
+//    {
+//        Intent intentLoginActivity = new Intent(getContext(),LoginActivity_.class);
+//        getContext().startActivity(intentLoginActivity);
+//    }
 
 }
