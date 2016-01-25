@@ -138,27 +138,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Background
-//    void addCategoriesToServer(List<Categories> catList)
-//    {
-//
-//        RestService restService = new RestService();
-//
-//        for(Categories itemCatList : catList)
-//        {
-//            CreateCategory createCategory = restService.createCategory(itemCatList.name);
-//            if(createCategory.getStatus().equalsIgnoreCase(Constants.success))
-//            {
-//                Log.d(LOG_VIEW, "Status: " + createCategory.getStatus() + ", Title: "
-//                        + createCategory.getData().getTitle() + ", Id: "
-//                        + createCategory.getData().getId());
-//            }
-//            else if(createCategory.getStatus().equalsIgnoreCase(Constants.unauthorized))
-//            {
-//                startLoginActivity();
-//            }
-//        }
-//    }
+    @Background
+    void addCategoriesToServer(List<Categories> catList)
+    {
+
+        RestService restService = new RestService();
+
+        for(Categories itemCatList : catList)
+        {
+            CreateCategory createCategory = restService.createCategory(itemCatList.name);
+            if(createCategory.getStatus().equalsIgnoreCase(Constants.success))
+            {
+                Log.d(LOG_VIEW, "Status: " + createCategory.getStatus() + ", Title: "
+                        + createCategory.getData().getTitle() + ", Id: "
+                        + createCategory.getData().getId());
+            }
+            else if(createCategory.getStatus().equalsIgnoreCase(Constants.unauthorized))
+            {
+                startLoginActivity();
+            }
+        }
+    }
 
     public void startLoginActivity()
     {

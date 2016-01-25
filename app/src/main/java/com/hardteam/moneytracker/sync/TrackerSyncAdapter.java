@@ -18,9 +18,12 @@ import com.activeandroid.query.Select;
 import com.google.gson.Gson;
 import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.database.Categories;
+import com.hardteam.moneytracker.database.Expenses;
 import com.hardteam.moneytracker.rest.RestService;
 import com.hardteam.moneytracker.rest.model.CreateCategory;
+import com.hardteam.moneytracker.rest.model.CreateExpense;
 import com.hardteam.moneytracker.rest.model.Data;
+import com.hardteam.moneytracker.rest.model.ExpenseSynch;
 import com.hardteam.moneytracker.rest.model.SynchCategory;
 import com.hardteam.moneytracker.ui.activities.LoginActivity_;
 import com.hardteam.moneytracker.util.Constants;
@@ -46,17 +49,15 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         // different requests
         Log.e(LOG_VIEW, "Syncing method was called!");
 
-        RestService restService = new RestService();
-        SynchCategory synchCategory = restService.synchCategory(addCategoriesToServerSynch());
+        categoriesToServerSynch();
 
-        if(synchCategory.getStatus().equalsIgnoreCase(Constants.success)) {
-            Log.d(LOG_VIEW, "Status: " + synchCategory.getStatus());
-        }
-        else if(synchCategory.getStatus().equalsIgnoreCase(Constants.error))
+        //Add the check of Expenses in DB
+        if(!getExpensesList().isEmpty())
         {
-            //startLoginActivity();
-            System.out.println("EEERRROOORRRR!!!!!!!!!!");
+            expensesToServerSynch();
         }
+
+
     }
 
     public static void syncImmediately(Context context)
@@ -132,26 +133,80 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
         {
             eachData.setTitle(itemCatList.toString());
-            eachData.setId(itemCatList.hashCode());
+            eachData.setId(0);//itemCatList.hashCode()
             data.add(gson.toJson(eachData));
-//            String nameData = itemCatList.name;
 
-//            Integer idData = itemCatList.getId().intValue();
-
-//            Data eachData = new Data();
-//            eachData.setId(idData);
-//            eachData.setId(i++);
-//            eachData.setTitle(nameData);
-//            data.add(eachData);
         }
 
         return data.toString();
     }
 
-//    public void startLoginActivity()
-//    {
-//        Intent intentLoginActivity = new Intent(getContext(),LoginActivity_.class);
-//        getContext().startActivity(intentLoginActivity);
-//    }
+
+    public void categoriesToServerSynch()
+    {
+        RestService restService = new RestService();
+        SynchCategory synchCategory = restService.synchCategory(addCategoriesToServerSynch());
+
+
+        if(synchCategory.getStatus().equalsIgnoreCase(Constants.success)) {
+            Log.d(LOG_VIEW, "Status: " + synchCategory.getStatus());
+
+        }
+        else if(synchCategory.getStatus().equalsIgnoreCase(Constants.error))
+        {
+           System.out.println("EEERRROOORRRR!!!!!!!!!!");
+        }
+
+    }
+
+    public void expensesToServerSynch()
+    {
+        RestService restService = new RestService();
+        ExpenseSynch expenseSynch = restService.expenseSynch(addExpensesToServerSynch());
+
+        if(expenseSynch.getStatus().equalsIgnoreCase(Constants.success)) {
+            Log.d(LOG_VIEW, "Status: " + expenseSynch.getStatus());
+            System.out.println("SENT to SERVER!!!!!!!!!!!");
+        }
+        else if(expenseSynch.getStatus().equalsIgnoreCase(Constants.error))
+        {
+            System.out.println("No GOOD!!!!!!!!!!!");
+
+        }
+    }
+
+    private List<Expenses> getExpensesList()
+    {
+        return new Select()
+                .from(Expenses.class)
+                .execute();
+    }
+
+    public String addExpensesToServerSynch()
+    {
+        List<Expenses> expensesList = getExpensesList();
+
+        ArrayList<String> dataExpense = new ArrayList<>();
+        CreateExpense eachExpense = new CreateExpense();
+        Gson gson = new Gson();
+
+        for(Expenses itemExpenseList : expensesList)
+
+        {
+            double priceValue = Double.parseDouble(itemExpenseList.price);
+            int idCategory = Integer.parseInt(itemExpenseList.category.getId().toString());
+
+            eachExpense.setId(0);//itemExpenseList.hashCode()
+            eachExpense.setCategoryId(idCategory);
+            eachExpense.setComment(itemExpenseList.name);
+            eachExpense.setSum(priceValue);
+            eachExpense.setTrDate(itemExpenseList.date);
+            dataExpense.add(gson.toJson(eachExpense));
+
+        }
+
+        return dataExpense.toString();
+    }
+
 
 }

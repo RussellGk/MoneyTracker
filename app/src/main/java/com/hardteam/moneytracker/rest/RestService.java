@@ -3,6 +3,7 @@ package com.hardteam.moneytracker.rest;
 import com.hardteam.moneytracker.MoneyTrackerApplication;
 import com.hardteam.moneytracker.rest.model.CreateCategory;
 import com.hardteam.moneytracker.rest.model.Data;
+import com.hardteam.moneytracker.rest.model.ExpenseSynch;
 import com.hardteam.moneytracker.rest.model.SynchCategory;
 import com.hardteam.moneytracker.rest.model.UserLoginModel;
 import com.hardteam.moneytracker.rest.model.UserRegistrationModel;
@@ -44,6 +45,11 @@ public class RestService {
     public SynchCategory synchCategory(String data)
     {
        return restClient.getCategorySynchApi().dataSynch(data, MoneyTrackerApplication.getAuthKey());
+    }
+
+    public ExpenseSynch expenseSynch(String dataExpense)
+    {
+        return restClient.getExpenseSynchApi().dataExpenseSynch(dataExpense, MoneyTrackerApplication.getAuthKey());
     }
 }
 
