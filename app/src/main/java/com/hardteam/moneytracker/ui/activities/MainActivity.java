@@ -86,13 +86,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void createCategories()
     {
-        Categories categoryFun = new Categories(Constants.fun);
+        Categories categoryFun = new Categories(Constants.fun,0);
         categoryFun.save();
-        Categories categoryPhone = new Categories(Constants.phone);
+        Categories categoryPhone = new Categories(Constants.phone,0);
         categoryPhone.save();
-        Categories categoryFood = new Categories(Constants.food);
+        Categories categoryFood = new Categories(Constants.food,0);
         categoryFood.save();
-        Categories categoryBooks = new Categories(Constants.books);
+        Categories categoryBooks = new Categories(Constants.books,0);
         categoryBooks.save();
     }
 

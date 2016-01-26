@@ -146,10 +146,26 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
     {
         RestService restService = new RestService();
         SynchCategory synchCategory = restService.synchCategory(addCategoriesToServerSynch());
+        List<Data> dataFromCategory = synchCategory.getData();
 
 
         if(synchCategory.getStatus().equalsIgnoreCase(Constants.success)) {
             Log.d(LOG_VIEW, "Status: " + synchCategory.getStatus());
+
+            List<Categories> catListNew = getDataList();
+
+
+            for(Data dataOne : dataFromCategory)
+            {
+                for(Categories itemCatListNew : catListNew)
+                {
+                    if(dataOne.getTitle().equals(itemCatListNew.name))
+                    {
+                        itemCatListNew.catid = dataOne.getId();
+                        break;
+                    }
+                }
+            }
 
         }
         else if(synchCategory.getStatus().equalsIgnoreCase(Constants.error))
@@ -197,7 +213,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
             int idCategory = Integer.parseInt(itemExpenseList.category.getId().toString());
 
             eachExpense.setId(0);//itemExpenseList.hashCode()
-            eachExpense.setCategoryId(idCategory);
+            eachExpense.setCategoryId(itemExpenseList.category.catid);//idCategory
             eachExpense.setComment(itemExpenseList.name);
             eachExpense.setSum(priceValue);
             eachExpense.setTrDate(itemExpenseList.date);
