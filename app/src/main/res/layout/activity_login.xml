@@ -47,6 +47,12 @@
             android:padding="@dimen/padding_button"
             android:textColor="@color/green"
             android:text="@string/button_login"/>
+
+        <com.google.android.gms.common.SignInButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_in_button"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

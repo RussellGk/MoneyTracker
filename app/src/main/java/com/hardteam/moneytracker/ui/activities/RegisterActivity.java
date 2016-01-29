@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else
         {
-            Snackbar.make(registerActivityLayout, Constants.noInternet, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(registerActivityLayout, Constants.NO_INTERNET, Snackbar.LENGTH_LONG).show();
         }
 
     }
@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if( loginUser.length() < 5 || passwordUser.length() < 5 )
         {
-            Snackbar.make(registerActivityLayout, Constants.loginPassLength, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(registerActivityLayout, Constants.LOGIN_PASS_LENGTH, Snackbar.LENGTH_LONG).show();
         }
 
         else
@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
             RestService restService = new RestService();
             UserRegistrationModel userRegistrationModel = restService.register(loginUser, passwordUser);
 
-            if(userRegistrationModel.getStatus().equalsIgnoreCase(Constants.success))
+            if(userRegistrationModel.getStatus().equalsIgnoreCase(Constants.SUCCESS))
             {
                 UserLoginModel userLoginModel = restService.login(loginUser,passwordUser);
                 MoneyTrackerApplication.setAuthToken(userLoginModel.getAuthToken());
@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
             else
             {
-                Snackbar.make(registerActivityLayout, Constants.registrationBusy, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(registerActivityLayout, Constants.REGISTRATION_BUSY, Snackbar.LENGTH_LONG).show();
             }
 
         }

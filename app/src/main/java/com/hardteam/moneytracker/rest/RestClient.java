@@ -1,8 +1,10 @@
 package com.hardteam.moneytracker.rest;
 
 import com.hardteam.moneytracker.rest.api.CategorySynchApi;
+import com.hardteam.moneytracker.rest.api.CheckGoogleTokenApi;
 import com.hardteam.moneytracker.rest.api.CreateCategoryApi;
 import com.hardteam.moneytracker.rest.api.ExpenseSynchApi;
+import com.hardteam.moneytracker.rest.api.GoogleJsonApi;
 import com.hardteam.moneytracker.rest.api.LoginUserApi;
 import com.hardteam.moneytracker.rest.api.RegisterUserApi;
 import com.hardteam.moneytracker.rest.model.CreateCategory;
@@ -22,6 +24,8 @@ public class RestClient {
     private CreateCategoryApi createCategoryApi;
     private CategorySynchApi categorySynchApi;
     private ExpenseSynchApi expenseSynchApi;
+    private CheckGoogleTokenApi checkGoogleTokenApi;
+    private GoogleJsonApi googleJsonApi;
 
     public RestClient()
     {
@@ -40,6 +44,10 @@ public class RestClient {
         categorySynchApi = restAdapter.create(CategorySynchApi.class);
 
         expenseSynchApi = restAdapter.create(ExpenseSynchApi.class);
+
+        checkGoogleTokenApi = restAdapter.create(CheckGoogleTokenApi.class);
+
+        googleJsonApi = restAdapter.create(GoogleJsonApi.class);
     }
 
     public RegisterUserApi getRegisterUserApi() {
@@ -61,5 +69,13 @@ public class RestClient {
 
     public ExpenseSynchApi getExpenseSynchApi() {
         return expenseSynchApi;
+    }
+
+    public CheckGoogleTokenApi getCheckGoogleTokenApi() {
+        return checkGoogleTokenApi;
+    }
+
+    public GoogleJsonApi getGoogleJsonApi() {
+        return googleJsonApi;
     }
 }

@@ -49,13 +49,13 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         // different requests
         Log.e(LOG_VIEW, "Syncing method was called!");
 
-        categoriesToServerSynch();
-
-        //Add the check of Expenses in DB
-        if(!getExpensesList().isEmpty())
-        {
-            expensesToServerSynch();
-        }
+//        categoriesToServerSynch();
+//
+//        //Add the check of Expenses in DB
+//        if(!getExpensesList().isEmpty())
+//        {
+//            expensesToServerSynch();
+//        }
 
 
     }
@@ -133,7 +133,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
         {
             eachData.setTitle(itemCatList.toString());
-            eachData.setId(0);//itemCatList.hashCode()
+            eachData.setId(0);
             data.add(gson.toJson(eachData));
 
         }
@@ -149,7 +149,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         List<Data> dataFromCategory = synchCategory.getData();
 
 
-        if(synchCategory.getStatus().equalsIgnoreCase(Constants.success)) {
+        if(synchCategory.getStatus().equalsIgnoreCase(Constants.SUCCESS)) {
             Log.d(LOG_VIEW, "Status: " + synchCategory.getStatus());
 
             List<Categories> catListNew = getDataList();
@@ -168,7 +168,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
         }
-        else if(synchCategory.getStatus().equalsIgnoreCase(Constants.error))
+        else if(synchCategory.getStatus().equalsIgnoreCase(Constants.ERROR))
         {
            System.out.println("EEERRROOORRRR!!!!!!!!!!");
         }
@@ -180,11 +180,11 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         RestService restService = new RestService();
         ExpenseSynch expenseSynch = restService.expenseSynch(addExpensesToServerSynch());
 
-        if(expenseSynch.getStatus().equalsIgnoreCase(Constants.success)) {
+        if(expenseSynch.getStatus().equalsIgnoreCase(Constants.SUCCESS)) {
             Log.d(LOG_VIEW, "Status: " + expenseSynch.getStatus());
             System.out.println("SENT to SERVER!!!!!!!!!!!");
         }
-        else if(expenseSynch.getStatus().equalsIgnoreCase(Constants.error))
+        else if(expenseSynch.getStatus().equalsIgnoreCase(Constants.ERROR))
         {
             System.out.println("No GOOD!!!!!!!!!!!");
 
@@ -210,9 +210,9 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
         {
             double priceValue = Double.parseDouble(itemExpenseList.price);
-            int idCategory = Integer.parseInt(itemExpenseList.category.getId().toString());
+            //int idCategory = Integer.parseInt(itemExpenseList.category.getId().toString());
 
-            eachExpense.setId(0);//itemExpenseList.hashCode()
+            eachExpense.setId(0);
             eachExpense.setCategoryId(itemExpenseList.category.catid);//idCategory
             eachExpense.setComment(itemExpenseList.name);
             eachExpense.setSum(priceValue);
