@@ -26,6 +26,7 @@ import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.rest.RestService;
 import com.hardteam.moneytracker.rest.model.CreateCategory;
+import com.hardteam.moneytracker.sync.TrackerSyncAdapter;
 import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
 import com.hardteam.moneytracker.ui.fragments.ExpansesFragment_;
 import com.hardteam.moneytracker.ui.fragments.SettingsFragment_;
@@ -77,19 +78,21 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment_()).commit();
         }
 
-        addCategoriesToServer(getDataList());
+//        addCategoriesToServer(getDataList());
+
+        TrackerSyncAdapter.initializeSyncAdapter(this); // Init of SyncAdapter
 
     }
 
     private void createCategories()
     {
-        Categories categoryFun = new Categories(Constants.fun);
+        Categories categoryFun = new Categories(Constants.fun,0);
         categoryFun.save();
-        Categories categoryPhone = new Categories(Constants.phone);
+        Categories categoryPhone = new Categories(Constants.phone,0);
         categoryPhone.save();
-        Categories categoryFood = new Categories(Constants.food);
+        Categories categoryFood = new Categories(Constants.food,0);
         categoryFood.save();
-        Categories categoryBooks = new Categories(Constants.books);
+        Categories categoryBooks = new Categories(Constants.books,0);
         categoryBooks.save();
     }
 

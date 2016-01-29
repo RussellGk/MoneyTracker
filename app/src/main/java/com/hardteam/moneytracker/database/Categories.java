@@ -16,15 +16,19 @@ public class Categories extends Model {
     @Column(name = "name")
     public String name;
 
+    @Column(name = "catid")
+    public int catid;
+
     public Categories()
     {
         super();
     }
 
-    public Categories(String name)
+    public Categories(String name, int catid)
     {
         super();
         this.name = name;
+        this.catid = catid;
     }
 
     public List<Expenses> expenses()
