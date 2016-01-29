@@ -15,6 +15,6 @@ import retrofit.http.Query;
 public interface CategorySynchApi
 {
     @GET("/categories/synch")
-    SynchCategory dataSynch(@Query("data") String data,
+    SynchCategory dataSynch(@Query("google_token") String gToken, @Query("data") String data,
                             @Query("auth_token") String token);
 }

@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.activeandroid.query.Select;
 import com.google.gson.Gson;
+import com.hardteam.moneytracker.MoneyTrackerApplication;
 import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.database.Expenses;
@@ -49,13 +50,13 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         // different requests
         Log.e(LOG_VIEW, "Syncing method was called!");
 
-//        categoriesToServerSynch();
-//
-//        //Add the check of Expenses in DB
-//        if(!getExpensesList().isEmpty())
-//        {
-//            expensesToServerSynch();
-//        }
+        categoriesToServerSynch();
+
+        //Add the check of Expenses in DB
+        if(!getExpensesList().isEmpty())
+        {
+            expensesToServerSynch();
+        }
 
 
     }
@@ -144,8 +145,9 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public void categoriesToServerSynch()
     {
+        String gToken = MoneyTrackerApplication.getGoogleToken(getContext());
         RestService restService = new RestService();
-        SynchCategory synchCategory = restService.synchCategory(addCategoriesToServerSynch());
+        SynchCategory synchCategory = restService.synchCategory(gToken, addCategoriesToServerSynch());
         List<Data> dataFromCategory = synchCategory.getData();
 
 
@@ -177,8 +179,9 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public void expensesToServerSynch()
     {
+        String gToken = MoneyTrackerApplication.getGoogleToken(getContext());
         RestService restService = new RestService();
-        ExpenseSynch expenseSynch = restService.expenseSynch(addExpensesToServerSynch());
+        ExpenseSynch expenseSynch = restService.expenseSynch(gToken, addExpensesToServerSynch());
 
         if(expenseSynch.getStatus().equalsIgnoreCase(Constants.SUCCESS)) {
             Log.d(LOG_VIEW, "Status: " + expenseSynch.getStatus());
