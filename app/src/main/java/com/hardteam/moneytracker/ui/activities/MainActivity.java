@@ -93,8 +93,13 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment_()).commit();
         }
 
+        String gToken1 = MoneyTrackerApplication.getGoogleToken(this);
 
-        googleJsonDataForDrawer();
+        if(!gToken1.equals("2")) //"2" - the default value when Google plus token equals null(used a normal Auth token)
+        {
+            googleJsonDataForDrawer();
+
+        }
 
 //        addCategoriesToServer(getDataList());
 
