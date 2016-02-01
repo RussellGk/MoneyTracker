@@ -2,6 +2,9 @@ package com.hardteam.moneytracker.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -19,13 +22,19 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.activeandroid.query.Select;
+import com.github.siyamed.shapeimageview.CircularImageView;
+import com.hardteam.moneytracker.MoneyTrackerApplication;
 import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.database.Categories;
+import com.hardteam.moneytracker.rest.RestClient;
 import com.hardteam.moneytracker.rest.RestService;
 import com.hardteam.moneytracker.rest.model.CreateCategory;
+import com.hardteam.moneytracker.rest.model.GooglePlusModel;
 import com.hardteam.moneytracker.sync.TrackerSyncAdapter;
 import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
 import com.hardteam.moneytracker.ui.fragments.ExpansesFragment_;
@@ -39,8 +48,14 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,21 +93,70 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment_()).commit();
         }
 
+
+        googleJsonDataForDrawer();
+
 //        addCategoriesToServer(getDataList());
 
         TrackerSyncAdapter.initializeSyncAdapter(this); // Init of SyncAdapter
 
+
+
+    }
+
+    @Background
+    void googleJsonDataForDrawer()
+    {
+        String gToken = MoneyTrackerApplication.getGoogleToken(this);
+        RestClient restGoogleClient = new RestClient();
+        GooglePlusModel googlePlusModel = restGoogleClient.getGoogleJsonApi().googleJson(gToken);
+        String nameUser = googlePlusModel.getName();
+        String emailUser = googlePlusModel.getEmail();
+        String pictureUser = googlePlusModel.getPicture();
+
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(pictureUser).getContent());
+
+            setPictureToDrawer(bitmap);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        setInfoToDrawer(nameUser, emailUser);
+
+    }
+
+
+    @UiThread
+    void setInfoToDrawer(String nameUser, String emailUser)
+    {
+        TextView googleNameDrawer = (TextView)findViewById(R.id.iname);
+        TextView googleMailDrawer = (TextView)findViewById(R.id.imail);
+        googleNameDrawer.setText(nameUser);
+        googleMailDrawer.setText(emailUser);
+    }
+
+
+    @UiThread
+    void setPictureToDrawer(Bitmap bitmap)
+    {
+//        ImageView googlepPicDrawer = (ImageView) findViewById(R.id.photo);
+        CircularImageView googlepPicDrawer = (CircularImageView) findViewById(R.id.photo_new);
+        googlepPicDrawer.setImageBitmap(bitmap);
     }
 
     private void createCategories()
     {
-        Categories categoryFun = new Categories(Constants.fun,0);
+        Categories categoryFun = new Categories(Constants.FUN,0);
         categoryFun.save();
-        Categories categoryPhone = new Categories(Constants.phone,0);
+        Categories categoryPhone = new Categories(Constants.PHONE,0);
         categoryPhone.save();
-        Categories categoryFood = new Categories(Constants.food,0);
+        Categories categoryFood = new Categories(Constants.FOOD,0);
         categoryFood.save();
-        Categories categoryBooks = new Categories(Constants.books,0);
+        Categories categoryBooks = new Categories(Constants.BOOKS,0);
         categoryBooks.save();
     }
 
@@ -147,13 +211,13 @@ public class MainActivity extends AppCompatActivity {
         for(Categories itemCatList : catList)
         {
             CreateCategory createCategory = restService.createCategory(itemCatList.name);
-            if(createCategory.getStatus().equalsIgnoreCase(Constants.success))
+            if(createCategory.getStatus().equalsIgnoreCase(Constants.SUCCESS))
             {
                 Log.d(LOG_VIEW, "Status: " + createCategory.getStatus() + ", Title: "
                         + createCategory.getData().getTitle() + ", Id: "
                         + createCategory.getData().getId());
             }
-            else if(createCategory.getStatus().equalsIgnoreCase(Constants.unauthorized))
+            else if(createCategory.getStatus().equalsIgnoreCase(Constants.UNAUTHORIZED))
             {
                 startLoginActivity();
             }

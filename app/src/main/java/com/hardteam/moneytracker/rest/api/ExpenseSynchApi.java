@@ -11,7 +11,7 @@ import retrofit.http.Query;
 public interface ExpenseSynchApi {
 
     @GET("/transactions/synch")
-    ExpenseSynch dataExpenseSynch(@Query("data") String data,
+    ExpenseSynch dataExpenseSynch(@Query("google_token") String gToken, @Query("data") String data,
                               @Query("auth_token") String token);
 
 }

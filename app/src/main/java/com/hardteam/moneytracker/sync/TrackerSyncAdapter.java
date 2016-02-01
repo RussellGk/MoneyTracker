@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.activeandroid.query.Select;
 import com.google.gson.Gson;
+import com.hardteam.moneytracker.MoneyTrackerApplication;
 import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.database.Categories;
 import com.hardteam.moneytracker.database.Expenses;
@@ -133,7 +134,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
         {
             eachData.setTitle(itemCatList.toString());
-            eachData.setId(0);//itemCatList.hashCode()
+            eachData.setId(0);
             data.add(gson.toJson(eachData));
 
         }
@@ -144,12 +145,13 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public void categoriesToServerSynch()
     {
+        String gToken = MoneyTrackerApplication.getGoogleToken(getContext());
         RestService restService = new RestService();
-        SynchCategory synchCategory = restService.synchCategory(addCategoriesToServerSynch());
+        SynchCategory synchCategory = restService.synchCategory(gToken, addCategoriesToServerSynch());
         List<Data> dataFromCategory = synchCategory.getData();
 
 
-        if(synchCategory.getStatus().equalsIgnoreCase(Constants.success)) {
+        if(synchCategory.getStatus().equalsIgnoreCase(Constants.SUCCESS)) {
             Log.d(LOG_VIEW, "Status: " + synchCategory.getStatus());
 
             List<Categories> catListNew = getDataList();
@@ -168,7 +170,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
         }
-        else if(synchCategory.getStatus().equalsIgnoreCase(Constants.error))
+        else if(synchCategory.getStatus().equalsIgnoreCase(Constants.ERROR))
         {
            System.out.println("EEERRROOORRRR!!!!!!!!!!");
         }
@@ -177,14 +179,15 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public void expensesToServerSynch()
     {
+        String gToken = MoneyTrackerApplication.getGoogleToken(getContext());
         RestService restService = new RestService();
-        ExpenseSynch expenseSynch = restService.expenseSynch(addExpensesToServerSynch());
+        ExpenseSynch expenseSynch = restService.expenseSynch(gToken, addExpensesToServerSynch());
 
-        if(expenseSynch.getStatus().equalsIgnoreCase(Constants.success)) {
+        if(expenseSynch.getStatus().equalsIgnoreCase(Constants.SUCCESS)) {
             Log.d(LOG_VIEW, "Status: " + expenseSynch.getStatus());
             System.out.println("SENT to SERVER!!!!!!!!!!!");
         }
-        else if(expenseSynch.getStatus().equalsIgnoreCase(Constants.error))
+        else if(expenseSynch.getStatus().equalsIgnoreCase(Constants.ERROR))
         {
             System.out.println("No GOOD!!!!!!!!!!!");
 
@@ -210,9 +213,9 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
         {
             double priceValue = Double.parseDouble(itemExpenseList.price);
-            int idCategory = Integer.parseInt(itemExpenseList.category.getId().toString());
+            //int idCategory = Integer.parseInt(itemExpenseList.category.getId().toString());
 
-            eachExpense.setId(0);//itemExpenseList.hashCode()
+            eachExpense.setId(0);
             eachExpense.setCategoryId(itemExpenseList.category.catid);//idCategory
             eachExpense.setComment(itemExpenseList.name);
             eachExpense.setSum(priceValue);

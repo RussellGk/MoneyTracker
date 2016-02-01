@@ -43,7 +43,7 @@ public class CategoryFragment extends Fragment {
 
     @Click(R.id.fab_category)
     void myButtonWasClicked() {
-        Snackbar.make(getView(), Constants.work, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getView(), Constants.WORK, Snackbar.LENGTH_SHORT).show();
     }
 
     @AfterViews

@@ -42,14 +42,14 @@ public class RestService {
                 MoneyTrackerApplication.getAuthKey());
     }
 
-    public SynchCategory synchCategory(String data)
+    public SynchCategory synchCategory(String gToken, String data)
     {
-       return restClient.getCategorySynchApi().dataSynch(data, MoneyTrackerApplication.getAuthKey());
+       return restClient.getCategorySynchApi().dataSynch(gToken, data, MoneyTrackerApplication.getAuthKey());
     }
 
-    public ExpenseSynch expenseSynch(String dataExpense)
+    public ExpenseSynch expenseSynch(String gToken,String dataExpense)
     {
-        return restClient.getExpenseSynchApi().dataExpenseSynch(dataExpense, MoneyTrackerApplication.getAuthKey());
+        return restClient.getExpenseSynchApi().dataExpenseSynch(gToken, dataExpense, MoneyTrackerApplication.getAuthKey());
     }
 }
 

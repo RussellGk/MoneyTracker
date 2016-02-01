@@ -64,7 +64,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            setTitle(Constants.expenseAdd);
+            setTitle(Constants.EXPENSE_ADD);
         }
 
         SpinnerCategoryAdapter spinnerAdapter = new SpinnerCategoryAdapter(getDataList());
@@ -85,11 +85,11 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         if (sumField.getText().toString().equals(""))
         {
-            Toast.makeText(this, Constants.fillSumField, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Constants.FILL_SUM_FIELD, Toast.LENGTH_LONG).show();
         }
         if (noteField.getText().toString().equals(""))
         {
-            Toast.makeText(this, Constants.fillNoteField, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Constants.FILL_NOTE_FIELD, Toast.LENGTH_LONG).show();
         }
 
         else
