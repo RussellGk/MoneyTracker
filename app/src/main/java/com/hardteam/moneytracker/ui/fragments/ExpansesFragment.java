@@ -7,6 +7,8 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,6 +47,10 @@ import java.util.List;
 public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fragment
 
     private static final String LOG_VIEW = ExpansesFragment.class.getSimpleName();
+
+    private ExpensesAdapter adapter;
+    private ActionModeCallback actionModeCallback = new ActionModeCallback();
+    private ActionMode actionMode;
 
     private static final String FILTER_ID = "filter_id";
 
@@ -128,7 +134,32 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
             @Override
             public void onLoadFinished(Loader<List<Expenses>> loader, List<Expenses> data) {
 
-                expensesRecycleView.setAdapter(new ExpensesAdapter(data));
+                adapter = new ExpensesAdapter(data, new ExpensesAdapter.CardViewHolder.ClickListener() {
+                    @Override
+                    public void onItemClicked(int position) {
+
+                        if(actionMode != null)
+                        {
+                         toggleSelection(position);
+                        }
+                    }
+
+                    @Override
+                    public boolean onItemLongClicked(int position)
+                    {
+                        if(actionMode == null)
+                        {
+                            AppCompatActivity activity = (AppCompatActivity)getActivity();
+                            actionMode = activity.startSupportActionMode(actionModeCallback);
+                        }
+
+                        toggleSelection(position);
+
+                        return true;
+                    }
+                });
+
+                expensesRecycleView.setAdapter(adapter);
             }
 
             @Override
@@ -143,5 +174,55 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
                 .from(Expenses.class)
                 .where("Name LIKE ?", new String[]{'%' + filter + '%'} )
                 .execute();
+    }
+
+    private void toggleSelection(int position)
+    {
+        adapter.toggleSelection(position);
+        int count = adapter.getSelectedItemCount();
+        if(count == 0)
+        {
+            actionMode.finish();
+        }
+        else
+        {
+            actionMode.setTitle(String.valueOf(count));
+            actionMode.invalidate();
+        }
+    }
+
+    private class ActionModeCallback implements ActionMode.Callback
+    {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.contextual_action_bar, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId())
+            {
+                case R.id.menu_remove:
+                    adapter.removeItems(adapter.getSelectedItems());
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+            adapter.clearSelection();
+            actionMode = null;
+        }
     }
 }
