@@ -21,4 +21,5 @@
     <string name="registration_text_view">No account yet? Sign up</string>
     <string name="content_authority">com.hardteam.moneytracker</string>
     <string name="sync_account_type">moneytracker.hardteam.com</string>
+    <string name="search_title">Search</string>
 </resources>

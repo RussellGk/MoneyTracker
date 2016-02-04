@@ -10,6 +10,9 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.activeandroid.query.Select;
 
@@ -25,7 +28,10 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.api.BackgroundExecutor;
 
 import java.util.List;
 
@@ -34,16 +40,22 @@ import java.util.List;
  */
 
 @EFragment(R.layout.expenses_fragment)
+@OptionsMenu(R.menu.search_menu)
 
 public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fragment
 
     private static final String LOG_VIEW = ExpansesFragment.class.getSimpleName();
+
+    private static final String FILTER_ID = "filter_id";
 
     @ViewById(R.id.context_recyclerview)
     RecyclerView expensesRecycleView;
 
     @ViewById(R.id.fab)
     FloatingActionButton floatingActionButton;
+
+    @OptionsMenuItem(R.id.search_action)
+    MenuItem menuItem;
 
     @Click(R.id.fab)
     void ButtonWasClicked() {
@@ -66,17 +78,46 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
     @Override
     public void onResume() {
         super.onResume();
-        loadData();
+        loadData("");
     }
 
-    private void loadData() {
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        SearchView searchView = (SearchView)menuItem.getActionView();
+        searchView.setQueryHint(getString(R.string.search_title));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d(LOG_VIEW, "Full query: " + query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d(LOG_VIEW, "Current text: " + newText);
+
+                BackgroundExecutor.cancelAll(FILTER_ID, true);
+                delayedQuery(newText);
+                return false;
+            }
+        });
+    }
+
+    @Background(delay = 700, id = FILTER_ID )
+    void delayedQuery(String filter)
+    {
+        loadData(filter);
+    }
+
+    private void loadData(final String filter) {
         getLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<List<Expenses>>() {
             @Override
             public Loader<List<Expenses>> onCreateLoader(int id, Bundle args) {//import android.support.v4.content.AsyncTaskLoader;
                 final AsyncTaskLoader<List<Expenses>> loader = new AsyncTaskLoader<List<Expenses>>(getActivity()) {
                     @Override
                     public List<Expenses> loadInBackground() {
-                        return getDataList();
+                        return getDataList(filter);
                     }
                 };
 
@@ -97,9 +138,10 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         });
     }
 
-    private List<Expenses> getDataList() {
+    private List<Expenses> getDataList(String filter) {
         return new Select()
                 .from(Expenses.class)
+                .where("Name LIKE ?", new String[]{'%' + filter + '%'} )
                 .execute();
     }
 }
