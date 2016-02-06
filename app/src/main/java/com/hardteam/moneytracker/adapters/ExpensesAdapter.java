@@ -30,7 +30,6 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.CardViewH
         this.expenses = expenses;
     }
 
-
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
@@ -48,14 +47,8 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.CardViewH
 
     }
 
-    private void removeItem(int position)
-    {
-        removeExpenses(position);
-        notifyItemRemoved(position);
-    }
+    public void removeItems(List<Integer> positions) {
 
-    public void removeItems(List<Integer> positions)
-    {
         Collections.sort(positions, new Comparator<Integer>() {
             @Override
             public int compare(Integer lhs, Integer rhs) {
@@ -63,46 +56,18 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.CardViewH
             }
         });
 
-        while (!positions.isEmpty())
-        {
-            if(positions.size() == 1)
-            {
-                removeItem(positions.get(0));
-                positions.remove(0);
-            }
-            else
-            {
-                int count = 1;
-                while (positions.size() > count)
-                {
-                    count++;
-                }
-
-                removeRange(count-1, count);
-
-                for (int i = 0; i < count; i++)
-                {
-                    positions.remove(0);
-                }
-            }
+        while (!positions.isEmpty()) {
+            removeItem(positions.get(0));
+            positions.remove(0);
         }
+
     }
 
-    private void removeRange(int positionStart, int itemCount)
-    {
-        for (int position = 0 ; position < itemCount; position++)
-        {
-            removeExpenses(positionStart);
-        }
-        notifyItemRangeRemoved(positionStart, itemCount);
-    }
-
-    private void removeExpenses(int position)
-    {
-        if(expenses.get(position) != null)
-        {
+    public void removeItem(int position) {
+        if (expenses.get(position) != null) {
             expenses.get(position).delete();
             expenses.remove(position);
+            notifyItemRemoved(position);
         }
     }
 

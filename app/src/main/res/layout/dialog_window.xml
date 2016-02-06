@@ -14,18 +14,19 @@
     android:paddingTop="@dimen/activity_horizontal_margin">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/title_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/common_signin_btn_default_background"
+        android:textColor="@color/green"
         android:textSize="20dp" />
 
     <EditText
         android:id="@+id/edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/common_signin_btn_default_background"
-        android:hint="Write the name of category " />
+        android:inputType="textCapSentences"
+        android:textColor="@color/common_signin_btn_light_text_focused"
+        android:hint="Write the category" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,7 +37,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@color/cardview_light_background"
-            android:text="ОТМЕНА"
+            android:text="Cancel"
             android:textColor="#7F7F7F"
             />
 
@@ -50,7 +51,7 @@
             android:layout_alignParentTop="true"
             android:layout_gravity="right"
             android:background="@color/cardview_light_background"
-            android:text="ОК"
+            android:text="Ok"
             android:textColor="#7F7F7F"
             />
     </RelativeLayout>

@@ -187,7 +187,7 @@ public class CategoryFragment extends Fragment {
     private void alertDialog() {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_window);
-        TextView textView = (TextView) dialog.findViewById(R.id.title);
+        TextView textView = (TextView) dialog.findViewById(R.id.title_dialog);
         final EditText editText = (EditText) dialog.findViewById(R.id.edittext);
         Button okButton = (Button) dialog.findViewById(R.id.okButton);
         Button cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
@@ -197,7 +197,18 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Editable text = editText.getText();
-                if (!TextUtils.isEmpty(text)) {
+//                if (!TextUtils.isEmpty(text)) {
+//                    dialog.dismiss();
+//                }
+                if (text.length() == 0) {
+                    dialog.dismiss();
+                }
+                else
+                {
+                    String textCategory = editText.getText().toString();
+                    Categories categoryNew = new Categories(textCategory,0);
+                    categoryNew.save();
+                    loadData("");
                     dialog.dismiss();
                 }
             }

@@ -8,8 +8,8 @@
     android:padding="@dimen/card_layout_margin"
     card_view:cardBackgroundColor="@color/white"
     card_view:cardCornerRadius="@dimen/card_corner_radius">
-    <RelativeLayout
-        style ="@style/Container.Formatted">
+
+    <RelativeLayout style ="@style/Container.Formatted">
      <TextView
         android:id="@+id/name_text"
         android:layout_width="wrap_content"
@@ -23,8 +23,7 @@
         android:text="@string/list_date"
         android:textSize="@dimen/list_text"
         android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        />
+        android:layout_centerInParent="true"/>
      <TextView
         android:id="@+id/sum_text"
         android:layout_width="wrap_content"

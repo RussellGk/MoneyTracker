@@ -45,14 +45,8 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CardViewH
         holder.selectedOverlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
     }
 
-    private void removeItem(int position)
-    {
-        removeCategories(position);
-        notifyItemRemoved(position);
-    }
+    public void removeItems(List<Integer> positions) {
 
-    public void removeItems(List<Integer> positions)
-    {
         Collections.sort(positions, new Comparator<Integer>() {
             @Override
             public int compare(Integer lhs, Integer rhs) {
@@ -60,46 +54,18 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CardViewH
             }
         });
 
-        while (!positions.isEmpty())
-        {
-            if(positions.size() == 1)
-            {
-                removeItem(positions.get(0));
-                positions.remove(0);
-            }
-            else
-            {
-                int count = 1;
-                while (positions.size() > count)
-                {
-                    count++;
-                }
-
-                removeRange(count-1, count);
-
-                for (int i = 0; i < count; i++)
-                {
-                    positions.remove(0);
-                }
-            }
+        while (!positions.isEmpty()) {
+            removeItem(positions.get(0));
+            positions.remove(0);
         }
+
     }
 
-    private void removeRange(int positionStart, int itemCount)
-    {
-        for (int position = 0 ; position < itemCount; position++)
-        {
-            removeCategories(positionStart);
-        }
-        notifyItemRangeRemoved(positionStart, itemCount);
-    }
-
-    private void removeCategories(int position)
-    {
-        if(categories.get(position) != null)
-        {
+    public void removeItem(int position) {
+        if (categories.get(position) != null) {
             categories.get(position).delete();
             categories.remove(position);
+            notifyItemRemoved(position);
         }
     }
 
@@ -116,7 +82,8 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CardViewH
 
         private ClickListener clickListener;
 
-        public CardViewHolder(View convertView, ClickListener clickListener) {
+        public CardViewHolder(View convertView, ClickListener clickListener)
+        {
             super(convertView);
             categories_name = (TextView) convertView.findViewById(R.id.name_text);
 
