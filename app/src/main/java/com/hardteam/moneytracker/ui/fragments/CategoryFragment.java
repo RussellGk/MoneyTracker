@@ -189,6 +189,11 @@ public class CategoryFragment extends Fragment {
         dialog.setContentView(R.layout.dialog_window);
         TextView textView = (TextView) dialog.findViewById(R.id.title_dialog);
         final EditText editText = (EditText) dialog.findViewById(R.id.edittext);
+
+//        dialog.getWindow().setWindowAnimations(R.style.);
+        dialog.getWindow().setWindowAnimations(R.style.DialogAnimation);
+
+
         Button okButton = (Button) dialog.findViewById(R.id.okButton);
         Button cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
 
