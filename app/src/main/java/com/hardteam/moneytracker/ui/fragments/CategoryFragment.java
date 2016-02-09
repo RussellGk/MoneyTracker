@@ -144,7 +144,7 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onLoadFinished(Loader<List<Categories>> loader, List<Categories> data) {
 
-                adapter = new CategoryAdapter(data, new CategoryAdapter.CardViewHolder.ClickListener() {
+                adapter = new CategoryAdapter(getActivity(), data, new CategoryAdapter.CardViewHolder.ClickListener() {
                     @Override
                     public void onItemClicked(int position) {
 

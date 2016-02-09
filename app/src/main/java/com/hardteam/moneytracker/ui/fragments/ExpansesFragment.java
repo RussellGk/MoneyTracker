@@ -7,10 +7,12 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,6 +62,9 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
     @ViewById(R.id.fab)
     FloatingActionButton floatingActionButton;
 
+    @ViewById(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @OptionsMenuItem(R.id.search_action)
     MenuItem menuItem;
 
@@ -67,6 +72,7 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
     void ButtonWasClicked() {
         Intent intent = new Intent(getActivity(), AddExpenseActivity_.class);
         getActivity().startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
     }
 
     @AfterViews
@@ -84,7 +90,33 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
     @Override
     public void onResume() {
         super.onResume();
-        loadData("");
+
+        swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.selected_color, R.color.white);
+
+        //expensesRecycleView.setAdapter(null);
+        loadData("Swipe");
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData("");
+            }
+        });
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.removeItem(viewHolder.getAdapterPosition());
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(expensesRecycleView);
     }
 
     @Override
@@ -134,7 +166,9 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
             @Override
             public void onLoadFinished(Loader<List<Expenses>> loader, List<Expenses> data) {
 
-                adapter = new ExpensesAdapter(data, new ExpensesAdapter.CardViewHolder.ClickListener() {
+                swipeRefreshLayout.setRefreshing(false);
+
+                adapter = new ExpensesAdapter(getActivity(), data, new ExpensesAdapter.CardViewHolder.ClickListener() {
                     @Override
                     public void onItemClicked(int position) {
 

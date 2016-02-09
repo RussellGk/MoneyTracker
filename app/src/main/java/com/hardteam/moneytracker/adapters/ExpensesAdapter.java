@@ -1,9 +1,13 @@
 package com.hardteam.moneytracker.adapters;
 
+import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.hardteam.moneytracker.R;
@@ -20,14 +24,16 @@ import java.util.List;
 public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.CardViewHolder> {
 
     List<Expenses> expenses;
-
     private CardViewHolder.ClickListener clickListener;
+    private  Context context;
+    private int lastPosition = -1;
 
-    public ExpensesAdapter(List<Expenses> expenses, CardViewHolder.ClickListener clickListener) {
+
+    public ExpensesAdapter(Context context, List<Expenses> expenses, CardViewHolder.ClickListener clickListener) {
 
         this.clickListener = clickListener;
-
         this.expenses = expenses;
+        this.context = context;
     }
 
     @Override
@@ -36,12 +42,24 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.CardViewH
         return new CardViewHolder(convertView, clickListener);
     }
 
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        if(position > lastPosition) {
+
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_up);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
         Expenses expense = expenses.get(position);
         holder.name_text.setText(expense.name);
         holder.data_text.setText(expense.date);
         holder.sum_text.setText(expense.price);
+
+        setAnimation(holder.cardView, position);
 
         holder.selectedOverlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
 
@@ -82,17 +100,23 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.CardViewH
     protected TextView data_text;
     protected TextView sum_text;
 
+    protected CardView cardView;
+
     protected View selectedOverlay;
 
     private ClickListener clickListener;
 
-    public CardViewHolder(View convertView, ClickListener clickListener) {
-        super(convertView);
-        name_text = (TextView) convertView.findViewById(R.id.name_text);
-        data_text = (TextView) convertView.findViewById(R.id.date_text);
-        sum_text =  (TextView) convertView.findViewById(R.id.sum_text);
+
+
+    public CardViewHolder(final View itemView, ClickListener clickListener) {//convertView
+        super(itemView);//convertView
+        name_text = (TextView) itemView.findViewById(R.id.name_text);//convertView
+        data_text = (TextView) itemView.findViewById(R.id.date_text);//convertView
+        sum_text =  (TextView) itemView.findViewById(R.id.sum_text);//convertView
 
         selectedOverlay = itemView.findViewById(R.id.selected_overlay);
+
+        cardView = (CardView) itemView.findViewById(R.id.card_view);
 
         this.clickListener = clickListener;
 

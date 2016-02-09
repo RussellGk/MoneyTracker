@@ -1,9 +1,13 @@
 package com.hardteam.moneytracker.adapters;
 
+import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.hardteam.moneytracker.Category;
@@ -21,14 +25,15 @@ import java.util.List;
 public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CardViewHolder>
 {
     List<Categories> categories;
-
     private CardViewHolder.ClickListener clickListener;
+    private Context context;
+    private int lastPosition = -1;
 
-    public CategoryAdapter(List<Categories> categories, CardViewHolder.ClickListener clickListener) {
+    public CategoryAdapter(Context context, List<Categories> categories, CardViewHolder.ClickListener clickListener) {
 
         this.clickListener = clickListener;
-
         this.categories = categories;
+        this.context = context;
     }
 
     @Override
@@ -37,10 +42,22 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CardViewH
         return new CardViewHolder(convertView, clickListener);
     }
 
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        if(position > lastPosition) {
+
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.rotate);// Animation!
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
         Categories category = categories.get(position);
         holder.categories_name.setText(category.name);
+
+        setAnimation(holder.cardView, position);
 
         holder.selectedOverlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
     }
@@ -78,16 +95,19 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CardViewH
 
         protected TextView categories_name;
 
+        protected CardView cardView;
+
         protected View selectedOverlay;
 
         private ClickListener clickListener;
 
-        public CardViewHolder(View convertView, ClickListener clickListener)
+        public CardViewHolder(final View itemView, ClickListener clickListener)
         {
-            super(convertView);
-            categories_name = (TextView) convertView.findViewById(R.id.name_text);
+            super(itemView);
+            categories_name = (TextView) itemView.findViewById(R.id.name_text);
 
             selectedOverlay = itemView.findViewById(R.id.selected_overlay_category);
+            cardView = (CardView) itemView.findViewById(R.id.category_list_one);
 
             this.clickListener = clickListener;
 
