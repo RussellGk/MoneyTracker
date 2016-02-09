@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -68,6 +70,9 @@ public class CategoryFragment extends Fragment {
     @ViewById(R.id.fab_category)
     FloatingActionButton floatingActionButton;
 
+    @ViewById(R.id.swipe_refresh_category)
+    SwipeRefreshLayout swipeRefreshLayoutCategory;
+
     @OptionsMenuItem(R.id.search_action)
     MenuItem menuItemCategory;
 
@@ -93,7 +98,32 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        swipeRefreshLayoutCategory.setColorSchemeColors(R.color.colorAccent, R.color.selected_color, R.color.white);
+
         loadData("");
+
+        swipeRefreshLayoutCategory.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData("");
+            }
+        });
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.removeItem(viewHolder.getAdapterPosition());
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(categoryRecycleView);
     }
 
     @Override
@@ -144,6 +174,8 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onLoadFinished(Loader<List<Categories>> loader, List<Categories> data) {
 
+                swipeRefreshLayoutCategory.setRefreshing(false);
+
                 adapter = new CategoryAdapter(getActivity(), data, new CategoryAdapter.CardViewHolder.ClickListener() {
                     @Override
                     public void onItemClicked(int position) {
@@ -190,9 +222,7 @@ public class CategoryFragment extends Fragment {
         TextView textView = (TextView) dialog.findViewById(R.id.title_dialog);
         final EditText editText = (EditText) dialog.findViewById(R.id.edittext);
 
-//        dialog.getWindow().setWindowAnimations(R.style.);
         dialog.getWindow().setWindowAnimations(R.style.DialogAnimation);
-
 
         Button okButton = (Button) dialog.findViewById(R.id.okButton);
         Button cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
@@ -202,9 +232,7 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Editable text = editText.getText();
-//                if (!TextUtils.isEmpty(text)) {
-//                    dialog.dismiss();
-//                }
+
                 if (text.length() == 0) {
                     dialog.dismiss();
                 }

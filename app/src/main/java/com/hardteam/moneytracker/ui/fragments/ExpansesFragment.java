@@ -94,7 +94,7 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
         swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.selected_color, R.color.white);
 
         //expensesRecycleView.setAdapter(null);
-        loadData("Swipe");
+        loadData("");
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
