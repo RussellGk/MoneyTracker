@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hardteam.moneytracker.R;
+import com.hardteam.moneytracker.ui.PieChartView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 /**
  * Created by RG on 07.12.2015.
@@ -19,10 +21,16 @@ import org.androidannotations.annotations.EFragment;
 
 public class StatisticsFragment extends Fragment {
 
+    private float[] datapoints = {450, 1230, 200, 400, 500};
+
+    @ViewById(R.id.pie_chart)
+    PieChartView pieChartView;
+
     @AfterViews
     void ready()
     {
        getActivity().setTitle(getString(R.string.nav_drawer_statistics));
+       pieChartView.setDataPoints(datapoints);
     }
 
 }
