@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:id="@+id/category_content"
-style = "@style/Container.MainBackground">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/category_content"
+    style = "@style/Container.MainBackground">
 
-<android.support.v7.widget.RecyclerView
+   <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
     android:id="@+id/category_recyclerview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     />
-<android.support.design.widget.FloatingActionButton
+   </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
     android:id="@+id/fab_category"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
