@@ -1,5 +1,6 @@
 package com.hardteam.moneytracker.ui.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,12 +8,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.activeandroid.query.Select;
 import com.hardteam.moneytracker.Category;
@@ -46,6 +55,11 @@ public class CategoryFragment extends Fragment {
 
     private static final String LOG_VIEW = CategoryFragment.class.getSimpleName();
 
+    private CategoryAdapter adapter;
+    private ActionModeCallback actionModeCallback = new ActionModeCallback();
+    private ActionMode actionMode;
+
+
     private static final String FILTER_ID = "filter_id";
 
     @ViewById(R.id.category_recyclerview)
@@ -59,7 +73,8 @@ public class CategoryFragment extends Fragment {
 
     @Click(R.id.fab_category)
     void myButtonWasClicked() {
-        Snackbar.make(getView(), Constants.WORK, Snackbar.LENGTH_SHORT).show();
+        alertDialog();
+//        Snackbar.make(getView(), Constants.WORK, Snackbar.LENGTH_SHORT).show();
     }
 
     @AfterViews
@@ -129,7 +144,29 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onLoadFinished(Loader<List<Categories>> loader, List<Categories> data) {
 
-                categoryRecycleView.setAdapter(new CategoryAdapter(data));
+                adapter = new CategoryAdapter(data, new CategoryAdapter.CardViewHolder.ClickListener() {
+                    @Override
+                    public void onItemClicked(int position) {
+
+                        if (actionMode != null) {
+                            toggleSelection(position);
+                        }
+                    }
+
+                    @Override
+                    public boolean onItemLongClicked(int position) {
+                        if (actionMode == null) {
+                            AppCompatActivity activity = (AppCompatActivity) getActivity();
+                            actionMode = activity.startSupportActionMode(actionModeCallback);
+                        }
+
+                        toggleSelection(position);
+
+                        return true;
+                    }
+                });
+
+                categoryRecycleView.setAdapter(adapter);
             }
 
             @Override
@@ -146,4 +183,95 @@ public class CategoryFragment extends Fragment {
                 .where("Name LIKE ?", new String[]{'%' + filter + '%'})
                 .execute();
     }
+
+    private void alertDialog() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.dialog_window);
+        TextView textView = (TextView) dialog.findViewById(R.id.title_dialog);
+        final EditText editText = (EditText) dialog.findViewById(R.id.edittext);
+        Button okButton = (Button) dialog.findViewById(R.id.okButton);
+        Button cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
+
+        textView.setText(getString(R.string.nav_drawer_categories));
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Editable text = editText.getText();
+//                if (!TextUtils.isEmpty(text)) {
+//                    dialog.dismiss();
+//                }
+                if (text.length() == 0) {
+                    dialog.dismiss();
+                }
+                else
+                {
+                    String textCategory = editText.getText().toString();
+                    Categories categoryNew = new Categories(textCategory,0);
+                    categoryNew.save();
+                    loadData("");
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+    }
+
+    private void toggleSelection(int position)
+    {
+        adapter.toggleSelection(position);
+        int count = adapter.getSelectedItemCount();
+        if(count == 0)
+        {
+            actionMode.finish();
+        }
+        else
+        {
+            actionMode.setTitle(String.valueOf(count));
+            actionMode.invalidate();
+        }
+    }
+
+    private class ActionModeCallback implements ActionMode.Callback
+    {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.contextual_action_bar, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId())
+            {
+                case R.id.menu_remove:
+                    adapter.removeItems(adapter.getSelectedItems());
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+            adapter.clearSelection();
+            actionMode = null;
+        }
+    }
+
 }

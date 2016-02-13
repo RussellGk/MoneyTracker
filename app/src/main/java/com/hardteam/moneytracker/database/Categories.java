@@ -24,11 +24,11 @@ public class Categories extends Model {
         super();
     }
 
-    public Categories(String name, int catid)
+    public Categories(String name, int catid)//remove catid
     {
         super();
         this.name = name;
-        this.catid = catid;
+        this.catid = catid;//this.catid = 0
     }
 
     public List<Expenses> expenses()
