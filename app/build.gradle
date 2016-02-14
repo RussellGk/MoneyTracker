@@ -36,6 +36,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.1.0'
 
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    compile 'com.github.bmarrdev:android-DecoView-charting:v0.9.5'
 }
 
 apt {
