@@ -1,5 +1,6 @@
 package com.hardteam.moneytracker.ui.activities;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,7 +11,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -38,7 +38,7 @@ import com.hardteam.moneytracker.rest.model.GooglePlusModel;
 import com.hardteam.moneytracker.sync.TrackerSyncAdapter;
 import com.hardteam.moneytracker.ui.fragments.CategoryFragment_;
 import com.hardteam.moneytracker.ui.fragments.ExpansesFragment_;
-import com.hardteam.moneytracker.ui.fragments.SettingsFragment_;
+import com.hardteam.moneytracker.ui.fragments.SettingsFragment;
 import com.hardteam.moneytracker.ui.fragments.StatisticsFragment_;
 import com.hardteam.moneytracker.util.Constants;
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(savedInstanceState == null)
         {
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment_()).commit();
+            getFragmentManager().beginTransaction().replace(R.id.main_container, new ExpansesFragment_()).commit();
         }
 
         String gToken1 = MoneyTrackerApplication.getGoogleToken(this);
@@ -193,11 +193,11 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Menu menuItems = navigationView.getMenu();
-        Fragment findingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+        Fragment findingFragment = getFragmentManager().findFragmentById(R.id.main_container);
 
         if(findingFragment != null && findingFragment instanceof ExpansesFragment_)
         {
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             menuItems.findItem(R.id.drawer_expenses).setCheckable(true);
 
         }
@@ -254,11 +254,11 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new StatisticsFragment_();
                         break;
                     case R.id.drawer_settings:
-                        fragment = new SettingsFragment_();
+                        fragment = new SettingsFragment();
                         break;
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragment).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.main_container, fragment).addToBackStack(null).commit();
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
                 return false;

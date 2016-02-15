@@ -1,12 +1,12 @@
 package com.hardteam.moneytracker.ui.fragments;
 
+import android.app.Fragment;
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -27,6 +27,7 @@ import com.hardteam.moneytracker.database.Expenses;
 import com.hardteam.moneytracker.rest.RestService;
 import com.hardteam.moneytracker.rest.model.UserRegistrationModel;
 import com.hardteam.moneytracker.ui.activities.AddExpenseActivity_;
+import com.hardteam.moneytracker.util.NotificationUtil;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -70,6 +71,9 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
 
     @Click(R.id.fab)
     void ButtonWasClicked() {
+
+        NotificationUtil.updateNotifications(getActivity());
+
         Intent intent = new Intent(getActivity(), AddExpenseActivity_.class);
         getActivity().startActivity(intent);
         getActivity().overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
