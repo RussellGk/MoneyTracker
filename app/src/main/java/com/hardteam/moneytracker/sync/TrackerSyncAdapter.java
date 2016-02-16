@@ -28,6 +28,7 @@ import com.hardteam.moneytracker.rest.model.ExpenseSynch;
 import com.hardteam.moneytracker.rest.model.SynchCategory;
 import com.hardteam.moneytracker.ui.activities.LoginActivity_;
 import com.hardteam.moneytracker.util.Constants;
+import com.hardteam.moneytracker.util.NotificationUtil;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ import java.util.List;
 public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public static final String LOG_VIEW = TrackerSyncAdapter.class.getSimpleName();
+    public boolean categoriesWasSent = false;
+    public boolean expensesWasSent = false;
 
     public TrackerSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -56,6 +59,11 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         if(!getExpensesList().isEmpty())
         {
             expensesToServerSynch();
+        }
+
+        if(categoriesWasSent == true && expensesWasSent == true)
+        {
+            NotificationUtil.updateNotifications(getContext());
         }
 
 
@@ -153,6 +161,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
         if(synchCategory.getStatus().equalsIgnoreCase(Constants.SUCCESS)) {
             Log.d(LOG_VIEW, "Status: " + synchCategory.getStatus());
+            categoriesWasSent = true;
 
             List<Categories> catListNew = getDataList();
 
@@ -186,6 +195,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         if(expenseSynch.getStatus().equalsIgnoreCase(Constants.SUCCESS)) {
             Log.d(LOG_VIEW, "Status: " + expenseSynch.getStatus());
             System.out.println("SENT to SERVER!!!!!!!!!!!");
+            expensesWasSent = true;
         }
         else if(expenseSynch.getStatus().equalsIgnoreCase(Constants.ERROR))
         {

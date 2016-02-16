@@ -15,6 +15,7 @@ import android.support.v7.app.NotificationCompat;
 
 import com.hardteam.moneytracker.R;
 import com.hardteam.moneytracker.ui.activities.MainActivity;
+import com.hardteam.moneytracker.ui.activities.MainActivity_;
 
 /**
  * Created by RG on 15.02.2016.
@@ -28,11 +29,23 @@ public class NotificationUtil {
         boolean displayNotifications = prefs.getBoolean(displayNotificationKey,
                 Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
 
+        String displaySoundKey = context.getString(R.string.pref_enable_sound_key);
+        boolean displaySound = prefs.getBoolean(displaySoundKey,
+                Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
+
+        String displayVibrationKey = context.getString(R.string.pref_enable_vibration_key);
+        boolean displayVibration = prefs.getBoolean(displayVibrationKey,
+                Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
+
+        String displayLedKey = context.getString(R.string.pref_enable_led_key);
+        boolean displayLed = prefs.getBoolean(displayLedKey,
+                Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
+
         if(displayNotifications)
         {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
             //Create Intent to launch this Activity again if the notification is clicked.
-            Intent i= new Intent(context, MainActivity.class);
+            Intent i= new Intent(context, MainActivity_.class);
             i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent intent = PendingIntent.getActivity(context, 0, i,
                     PendingIntent.FLAG_UPDATE_CURRENT);
@@ -40,11 +53,17 @@ public class NotificationUtil {
             //Setsthesmalliconfortheticker
             builder.setSmallIcon(R.mipmap.ic_launcher);
             //Setstheindicator
-            builder.setLights(Color.CYAN,300,1500);
+            if(displayLed) {
+                builder.setLights(Color.CYAN, 300, 1500);
+            }
             //Setsvibration
-            builder.setVibrate(new long[]{1000,1000,1000,1000,1000});
+            if(displayVibration) {
+                builder.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
+            }
             //Setsdefaultsound
-            builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+            if(displaySound) {
+                builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+            }
             //Cancelthenotificationwhenclicked
             builder.setAutoCancel(true);
 

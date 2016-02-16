@@ -72,8 +72,6 @@ public class ExpansesFragment extends Fragment { //!!! android.support.v4.app.Fr
     @Click(R.id.fab)
     void ButtonWasClicked() {
 
-        NotificationUtil.updateNotifications(getActivity());
-
         Intent intent = new Intent(getActivity(), AddExpenseActivity_.class);
         getActivity().startActivity(intent);
         getActivity().overridePendingTransition(R.anim.from_middle, R.anim.to_middle);
