@@ -24,4 +24,6 @@ public class Constants {
     public static final String work = "Work";
     public static final String WORK = "Work";
     public static final String TOKEN_KEY = "token_key";
+
+    public static final int NOTIFICATION_ID = 4004;
 }

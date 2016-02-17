@@ -18,18 +18,11 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true">
 
-     <!--<ImageView-->
-        <!--android:layout_width="@dimen/photo_radius"-->
-        <!--android:layout_height="@dimen/photo_radius"-->
-        <!--android:id="@+id/photo"-->
-        <!--android:src="@mipmap/photo"/>-->
-
-
      <com.github.siyamed.shapeimageview.CircularImageView
          android:layout_width="64dp"
          android:layout_height="64dp"
          android:id="@+id/photo_new"
-         android:src="@drawable/mr_ic_audio_vol"/>
+         android:src="@mipmap/linfox"/>
 
     </LinearLayout>
 
