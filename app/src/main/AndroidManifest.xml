@@ -54,7 +54,8 @@
             android:value=".ui.activities.RegisterActivity_"/>
         </activity>
 
-        <activity android:name=".ui.activities.AddExpenseActivity_">
+        <activity android:name=".ui.activities.AddExpenseActivity_"
+            android:configChanges="orientation|screenSize">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity_"/>
         </activity>

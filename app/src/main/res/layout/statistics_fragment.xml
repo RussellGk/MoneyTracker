@@ -4,12 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_vertical_margin"
-        android:gravity="center_horizontal"
-        android:text = "@string/stat_temp"
-        android:textSize ="@dimen/list_text"></TextView>
+    <com.hookedonplay.decoviewlib.DecoView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dynamicArcView"/>
 
 </LinearLayout>
